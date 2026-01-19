@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import {render, Text, Box, useInput, useApp} from 'ink';
 
-const Record = () => {
+const Record2 = () => {
 	const [dimensions, setDimensions] = useState({
 		width: process.stdout.columns || 80,
 		height: process.stdout.rows || 24
@@ -16,8 +16,6 @@ const Record = () => {
 			exit();
 		}
 	});
-	
-	const [stage1, stage2, stage3, stage4, stage5] = useState(stage1);
 
 	useEffect(() => {
 		// Handle terminal resize
@@ -42,9 +40,6 @@ const Record = () => {
 			process.stdout.removeListener('resize', handleResize);
 		};
 	}, []);
-
-
-
 
     const title = () => {
         return (
@@ -74,18 +69,37 @@ const Record = () => {
 			<Box borderStyle="round" borderColor="cyan"> 	
 				<Box borderStyle="round" borderColor="cyan"> 	
 					<Box borderStyle="round" borderColor="cyan"> 	
-						<Box flexDirection="column" width="100%" height="100%" alignItems='center' justifyContent='center'>
+						<Box flexDirection="column" width="100%" height="100%" alignItems='center' > 
 							<Text> </Text>
                             {title()}
 							<Text> </Text>
 							<Text> </Text>
-							<Box borderStyle="round" borderColor="cyan">
-								<Text  borderColor="Green" borderStyle="round">  Click/[enter] To Start  </Text>
-							</Box>
+                            <Text width="50"> Record how you are feeling now</Text>
 							<Text> </Text>
 							<Text> </Text>
-							{/* <Text color="yellow">daba dee daba daaa</Text> */}
-							<Text color="gray">Press 'q' or ESC to quit</Text>
+                            <Box alignItems='row' gap="10">
+                                {/* <Text width="50"> 1 </Text>
+                                <Text width="50"> 2 </Text>
+                                <Text width="50"> 3 </Text>
+                                <Text width="50"> 4 </Text>
+                                <Text width="50"> 5 </Text> */}
+                                <Box borderStyle="round" borderColor="cyan">
+                                    <Text width="50"> 1 🤩 </Text>
+                                </Box>
+
+                                <Box borderStyle="round" borderColor="cyan">
+                                    <Text width="50"> 2 😀 </Text>
+                                </Box>
+                                <Box borderStyle="round" borderColor="cyan">
+                                    <Text width="50"> 3 😐 </Text>
+                                </Box>
+                                <Box borderStyle="round" borderColor="cyan">
+                                    <Text width="50"> 4 🙁 </Text>
+                                </Box>
+                                <Box borderStyle="round" borderColor="cyan">
+                                    <Text width="50"> 5 😡 </Text>
+                                </Box>
+                            </Box>
 							<Text> </Text>
 						</Box>
 					</Box>
@@ -95,4 +109,4 @@ const Record = () => {
 	);
 };
 
-export default Record;
+export default Record2;
