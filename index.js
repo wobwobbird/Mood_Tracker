@@ -36,12 +36,3 @@ if (process.argv[2] === 'mood') {
 
     }
 }
-
-
-
-// run 'node index.js blessed'
-if (process.argv[2] === 'blessed') { 
-    console.log("running blessed mode");
-    createBlessedScreen();
-}
-

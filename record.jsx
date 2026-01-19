@@ -70,9 +70,18 @@ const Record = () => {
 				<Box borderStyle="round" borderColor="cyan"> 	
 					<Box borderStyle="round" borderColor="cyan"> 	
 						<Box flexDirection="column" width="100%" height="100%" alignItems='center' justifyContent='center'>
-                            {title}
-							<Text color="yellow">daba dee daba daaa</Text>
+							<Text> </Text>
+                            {title()}
+							<Text> </Text>
+							<Text> </Text>
+							<Box borderStyle="round" borderColor="cyan">
+								<Text  borderColor="Green" borderStyle="round">  Click To Start  </Text>
+							</Box>
+							<Text> </Text>
+							<Text> </Text>
+							{/* <Text color="yellow">daba dee daba daaa</Text> */}
 							<Text color="gray">Press 'q' or ESC to quit</Text>
+							<Text> </Text>
 						</Box>
 					</Box>
 				</Box>
