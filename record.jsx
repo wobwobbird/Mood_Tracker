@@ -7,6 +7,11 @@ const Record = () => {
 		height: process.stdout.rows || 24
 	});
 	
+	const [selectedIndex, setSelectedIndex] = useState(0);
+
+	// const [logoIndex, setLogoIndex] = useState(0);
+	const [logoColourIndex, setLogoColourIndex] = useState(0);
+
 	const {exit} = useApp();
 
 	// Handle keyboard input (like blessed's screen.key)
@@ -19,8 +24,15 @@ const Record = () => {
 			setSelectedIndex((selectedIndex + 1) % SELECTABLE_ELEMENTS.length);
 		}
 		if (key.upArrow || key.leftArrow) {
-			setSelectedIndex(SELECTABLE_ELEMENTS.length % (selectedIndex - 1));
+			setSelectedIndex((selectedIndex - 1 + SELECTABLE_ELEMENTS.length) % SELECTABLE_ELEMENTS.length);
+		}
+		if (key.return) {
+			if (selectedIndex === 1) {
+				// setLogoIndex((logoIndex + 1) % 3);
+				// setLogoIndex(prev => (prev + 1) % 3);
+				setLogoColourIndex((logoColourIndex + 1) % colorSchemes.length)
 
+			}
 		}
 	});
 
@@ -50,98 +62,84 @@ const Record = () => {
 		};
 	}, []);
 
-	const [selectedIndex, setSelectedIndex] = useState(0);
+	let colorSchemes = [
+		["white", "white", "white", "white", "white", "white", "white", "white", "white", "white", "white"], //all white
+		["red", "yellow", "yellow", "green", "blue", "magenta", "magenta", "red", "yellow", "green", "yellow"], // take from title 1 (orange→yellow, indigo→magenta, violet→magenta)
+		["cyan", "magenta", "yellowBright", "greenBright", "blueBright", "redBright", "whiteBright", "cyanBright", "magentaBright", "yellow", "green"], // take from title 2
+		["redBright", "red", "magenta", "magentaBright", "yellow", "yellowBright", "cyan", "cyanBright", "blue", "blueBright", "whiteBright"], // sunset theme - warm to cool transition
+		["blue", "blueBright", "cyan", "cyanBright", "blue", "cyan", "blueBright", "cyanBright", "blue", "cyan", "blueBright"], // ocean theme - deep blues and cyans
+		["magentaBright", "cyanBright", "yellowBright", "greenBright", "redBright", "magentaBright", "cyanBright", "yellowBright", "greenBright", "redBright", "whiteBright"] // neon/cyberpunk theme - vibrant bright colors
+	];
+
+
+
+	let line = [
+	{
+		line1: "red",
+		line2: "yellow",
+		line3: "blue"
+	},
+	{
+		line1: "red",
+		line2: "yellow",
+		line3: "blue"
+	},
+	{
+		line1: "red",
+		line2: "yellow",
+		line3: "blue"
+	}
+	]
+
 
 	const SELECTABLE_ELEMENTS = ["none", "logo", "button"];
-	// 0 = none selected
-	// 1 = Text color
-	// 2 = enter button
 
-
-
-
-    const title0 = () => {
+    const title = () => {
         return (
             <Box flexDirection="column">
-                <Text>{'$$\\      $$\\                           $$\\       $$\\                                                        '}</Text>
-                <Text>{'$$$\\    $$$ |                          $$ |      $$ |                                                       '}</Text>
-                <Text>{'$$$$\\  $$$$ | $$$$$$\\   $$$$$$\\   $$$$$$$ |      $$ |      $$$$$$\\   $$$$$$\\   $$$$$$\\   $$$$$$\\   $$$$$$\\  '}</Text>
-                <Text>{'$$\\$$\\$$ $$ |$$  __$$\\ $$  __$$\\ $$  __$$ |      $$ |     $$  __$$\\ $$  __$$\\ $$  __$$\\ $$  __$$\\ $$  __$$\\ '}</Text>
-                <Text>{'$$ \\$$$  $$ |$$ /  $$ |$$ /  $$ |$$ /  $$ |      $$ |     $$ /  $$ |$$ /  $$ |$$ /  $$ |$$$$$$$$ |$$ |  \\__|'}</Text>
-                <Text>{'$$ |\\$  /$$ |$$ |  $$ |$$ |  $$ |$$ |  $$ |      $$ |     $$ |  $$ |$$ |  $$ |$$ |  $$ |$$   ____|$$ |      '}</Text>
-                <Text>{'$$ | \\_/ $$ |\\$$$$$$  |\\$$$$$$  |\\$$$$$$$ |      $$$$$$$$\\\\$$$$$$  |\\$$$$$$$ |\\$$$$$$$ |\\$$$$$$$\\ $$ |      '}</Text>
-                <Text>{'\\__|     \\__| \\______/  \\______/  \\_______|      \\________|\\______/  \\____$$ | \\____$$ | \\_______|\\__|      '}</Text>
-                <Text>{'                                                                    $$\\   $$ |$$\\   $$ |                    '}</Text>
-                <Text>{'                                                                    \\$$$$$$  |\\$$$$$$  |                    '}</Text>
-                <Text>{'                                                                     \\______/  \\______/                     '}</Text>
-            </Box>
-        )
-    } 
-
-    const title1 = () => {
-        return (
-            <Box flexDirection="column">
-                <Text color="red">{'$$\\      $$\\                           $$\\       $$\\                                                        '}</Text>
-                <Text color="orange">{'$$$\\    $$$ |                          $$ |      $$ |                                                       '}</Text>
-                <Text color="yellow">{'$$$$\\  $$$$ | $$$$$$\\   $$$$$$\\   $$$$$$$ |      $$ |      $$$$$$\\   $$$$$$\\   $$$$$$\\   $$$$$$\\   $$$$$$\\  '}</Text>
-                <Text color="green">{'$$\\$$\\$$ $$ |$$  __$$\\ $$  __$$\\ $$  __$$ |      $$ |     $$  __$$\\ $$  __$$\\ $$  __$$\\ $$  __$$\\ $$  __$$\\ '}</Text>
-                <Text color="blue">{'$$ \\$$$  $$ |$$ /  $$ |$$ /  $$ |$$ /  $$ |      $$ |     $$ /  $$ |$$ /  $$ |$$ /  $$ |$$$$$$$$ |$$ |  \\__|'}</Text>
-                <Text color="indigo">{'$$ |\\$  /$$ |$$ |  $$ |$$ |  $$ |$$ |  $$ |      $$ |     $$ |  $$ |$$ |  $$ |$$ |  $$ |$$   ____|$$ |      '}</Text>
-                <Text color="violate">{'$$ | \\_/ $$ |\\$$$$$$  |\\$$$$$$  |\\$$$$$$$ |      $$$$$$$$\\\\$$$$$$  |\\$$$$$$$ |\\$$$$$$$ |\\$$$$$$$\\ $$ |      '}</Text>
-                <Text color="red">{'\\__|     \\__| \\______/  \\______/  \\_______|      \\________|\\______/  \\____$$ | \\____$$ | \\_______|\\__|      '}</Text>
-                <Text color="orange">{'                                                                    $$\\   $$ |$$\\   $$ |                    '}</Text>
-                <Text color="green">{'                                                                    \\$$$$$$  |\\$$$$$$  |                    '}</Text>
-                <Text color="yellow">{'                                                                     \\______/  \\______/                     '}</Text>
-            </Box>
-        )
-    } 
-
-    const title2 = () => {
-        return (
-            <Box flexDirection="column">
-                <Text color="cyan">{'$$\\      $$\\                           $$\\       $$\\                                                        '}</Text>
-                <Text color="magenta">{'$$$\\    $$$ |                          $$ |      $$ |                                                       '}</Text>
-                <Text color="yellowBright">{'$$$$\\  $$$$ | $$$$$$\\   $$$$$$\\   $$$$$$$ |      $$ |      $$$$$$\\   $$$$$$\\   $$$$$$\\   $$$$$$\\   $$$$$$\\  '}</Text>
-                <Text color="greenBright">{'$$\\$$\\$$ $$ |$$  __$$\\ $$  __$$\\ $$  __$$ |      $$ |     $$  __$$\\ $$  __$$\\ $$  __$$\\ $$  __$$\\ $$  __$$\\ '}</Text>
-                <Text color="blueBright">{'$$ \\$$$  $$ |$$ /  $$ |$$ /  $$ |$$ /  $$ |      $$ |     $$ /  $$ |$$ /  $$ |$$ /  $$ |$$$$$$$$ |$$ |  \\__|'}</Text>
-                <Text color="redBright">{'$$ |\\$  /$$ |$$ |  $$ |$$ |  $$ |$$ |  $$ |      $$ |     $$ |  $$ |$$ |  $$ |$$ |  $$ |$$   ____|$$ |      '}</Text>
-                <Text color="whiteBright">{'$$ | \\_/ $$ |\\$$$$$$  |\\$$$$$$  |\\$$$$$$$ |      $$$$$$$$\\\\$$$$$$  |\\$$$$$$$ |\\$$$$$$$ |\\$$$$$$$\\ $$ |      '}</Text>
-                <Text color="cyanBright">{'\\__|     \\__| \\______/  \\______/  \\_______|      \\________|\\______/  \\____$$ | \\____$$ | \\_______|\\__|      '}</Text>
-                <Text color="magentaBright">{'                                                                    $$\\   $$ |$$\\   $$ |                    '}</Text>
-                <Text color="yellow">{'                                                                    \\$$$$$$  |\\$$$$$$  |                    '}</Text>
-                <Text color="green">{'                                                                     \\______/  \\______/                     '}</Text>
+                <Text color={colorSchemes[logoColourIndex][0]}>{'$$\\      $$\\                           $$\\       $$\\                                                        '}</Text>
+                <Text color={colorSchemes[logoColourIndex][1]}>{'$$$\\    $$$ |                          $$ |      $$ |                                                       '}</Text>
+                <Text color={colorSchemes[logoColourIndex][2]}>{'$$$$\\  $$$$ | $$$$$$\\   $$$$$$\\   $$$$$$$ |      $$ |      $$$$$$\\   $$$$$$\\   $$$$$$\\   $$$$$$\\   $$$$$$\\  '}</Text>
+                <Text color={colorSchemes[logoColourIndex][3]}>{'$$\\$$\\$$ $$ |$$  __$$\\ $$  __$$\\ $$  __$$ |      $$ |     $$  __$$\\ $$  __$$\\ $$  __$$\\ $$  __$$\\ $$  __$$\\ '}</Text>
+                <Text color={colorSchemes[logoColourIndex][4]}>{'$$ \\$$$  $$ |$$ /  $$ |$$ /  $$ |$$ /  $$ |      $$ |     $$ /  $$ |$$ /  $$ |$$ /  $$ |$$$$$$$$ |$$ |  \\__|'}</Text>
+                <Text color={colorSchemes[logoColourIndex][5]}>{'$$ |\\$  /$$ |$$ |  $$ |$$ |  $$ |$$ |  $$ |      $$ |     $$ |  $$ |$$ |  $$ |$$ |  $$ |$$   ____|$$ |      '}</Text>
+                <Text color={colorSchemes[logoColourIndex][6]}>{'$$ | \\_/ $$ |\\$$$$$$  |\\$$$$$$  |\\$$$$$$$ |      $$$$$$$$\\\\$$$$$$  |\\$$$$$$$ |\\$$$$$$$ |\\$$$$$$$\\ $$ |      '}</Text>
+                <Text color={colorSchemes[logoColourIndex][7]}>{'\\__|     \\__| \\______/  \\______/  \\_______|      \\________|\\______/  \\____$$ | \\____$$ | \\_______|\\__|      '}</Text>
+                <Text color={colorSchemes[logoColourIndex][8]}>{'                                                                    $$\\   $$ |$$\\   $$ |                    '}</Text>
+                <Text color={colorSchemes[logoColourIndex][9]}>{'                                                                    \\$$$$$$  |\\$$$$$$  |                    '}</Text>
+                <Text color={colorSchemes[logoColourIndex][10]}>{'                                                                     \\______/  \\______/                     '}</Text>
             </Box>
         )
     } 
 
 	return (
 		<Box
-			borderStyle="round" 
+			borderStyle={dimensions.height > 30 ? "round" : undefined}
 			borderColor="cyan"
 			width={dimensions.width}
 			height={dimensions.height}
 		> 
-			<Box borderStyle="round" borderColor="cyan"> 	
-				<Box borderStyle="round" borderColor="cyan"> 	
-					<Box borderStyle="round" borderColor="cyan"> 	
+			<Box borderStyle={dimensions.height > 30 ? "round" : undefined} borderColor="cyan"> 	
+				<Box borderStyle={dimensions.height > 30 ? "round" : undefined} borderColor="cyan"> 	
+					<Box borderStyle={dimensions.height > 30 ? "round" : undefined} borderColor="cyan"> 	
 						<Box flexDirection="column" width="100%" height="100%" alignItems='center' justifyContent='center'>
 							<Text> </Text>
-							<Box borderStyle={selectedIndex === 1 ? "double" : undefined} padding={1} borderColor={undefined}>
-                            	{title2()}
-							<Text> </Text>
+							{/* <Box borderStyle={selectedIndex === 1 ? "double" : undefined} padding={1} borderColor={undefined}> */}
+							{/* <Box borderStyle="double" padding={1} borderColor={undefined}> */}
+							<Box borderStyle="double" padding={1} borderColor={selectedIndex === 1 ? "white" : "black"}>
+								{title()}
 							</Box>
 							<Text> </Text>
-							<Text> </Text>
-							<Box borderStyle={selectedIndex === 2 ? "double" : undefined} padding={1} borderColor={undefined}>
+							{/* <Box borderStyle={selectedIndex === 2 ? "double" : undefined} padding={1} borderColor={undefined}> */}
+							<Box borderStyle="double" padding={1} borderColor={selectedIndex === 2 ? "white" : "black"}>
 								<Box borderStyle="round" borderColor="cyan">
 									<Text  borderColor="Green" borderStyle="round">  Click/[enter] To Start  </Text>
 								</Box>
 							</Box>
 							<Text> </Text>
-							<Text> </Text>
 							{/* <Text color="yellow">daba dee daba daaa</Text> */}
-							<Text color="gray">Press 'q' or ESC to quit</Text>
 							<Text> </Text>
+							<Text color="gray" alignSelf="center" >Press 'q' or ESC to quit</Text>	
 						</Box>
 					</Box>
 				</Box>

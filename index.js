@@ -5,7 +5,7 @@ import Record2 from "./record_2";
 
 // to run 
 if (process.argv[2] === 'mood') {
-    if (process.argv[3] === 'record') {
+        if (process.argv[3] === 'record') {
         // Set up terminal like blessed does
         process.stdin.setRawMode(true);
         process.stdin.resume();
@@ -14,10 +14,28 @@ if (process.argv[2] === 'mood') {
         // Clear screen and hide cursor
         process.stdout.write('\x1b[2J\x1b[H');
         process.stdout.write('\x1b[?25l');
-        
+
+        // Handle uncaught errors to restore terminal
+        process.on('uncaughtException', (error) => {
+            process.stdout.write('\x1b[?25h'); // Show cursor
+            process.stdin.setRawMode(false);
+            process.stdin.pause();
+            console.error('\n\nError:', error.message);
+            process.exit(1);
+        });
+
+        // Also handle unhandled promise rejections
+        process.on('unhandledRejection', (error) => {
+            process.stdout.write('\x1b[?25h'); // Show cursor
+            process.stdin.setRawMode(false);
+            process.stdin.pause();
+            console.error('\n\nUnhandled Rejection:', error);
+            process.exit(1);
+        });
+
         // Render with Ink - it will take over the terminal
-        const instance = render(React.createElement(Record));
-        
+        const instance = render(React.createElement(Record));        
+
         // Cleanup on exit
         const cleanup = () => {
             process.stdout.write('\x1b[?25h'); // Show cursor
@@ -37,10 +55,28 @@ if (process.argv[2] === 'mood') {
         // Clear screen and hide cursor
         process.stdout.write('\x1b[2J\x1b[H');
         process.stdout.write('\x1b[?25l');
-        
+
+        // Handle uncaught errors to restore terminal
+        process.on('uncaughtException', (error) => {
+            process.stdout.write('\x1b[?25h'); // Show cursor
+            process.stdin.setRawMode(false);
+            process.stdin.pause();
+            console.error('\n\nError:', error.message);
+            process.exit(1);
+        });
+
+        // Also handle unhandled promise rejections
+        process.on('unhandledRejection', (error) => {
+            process.stdout.write('\x1b[?25h'); // Show cursor
+            process.stdin.setRawMode(false);
+            process.stdin.pause();
+            console.error('\n\nUnhandled Rejection:', error);
+            process.exit(1);
+        });
+
         // Render with Ink - it will take over the terminal
-        const instance = render(React.createElement(Record2));
-        
+        const instance = render(React.createElement(Record2));        
+                
         // Cleanup on exit
         const cleanup = () => {
             process.stdout.write('\x1b[?25h'); // Show cursorrecord
