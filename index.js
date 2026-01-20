@@ -1,7 +1,6 @@
 import React from "react";
 import { render } from 'ink';
 import App from "./App";
-import Record2 from "./record_2";
 
 // to run 
 if (process.argv[2] === 'mood') {
