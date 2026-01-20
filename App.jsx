@@ -1,7 +1,8 @@
 import React, {useState, useEffect} from 'react';
 import {render, Text, Box, useInput, useApp} from 'ink';
+import MoodSelection from './mood_selection';
 
-const Record = () => {
+const App = () => {
 	const [dimensions, setDimensions] = useState({
 		width: process.stdout.columns || 80,
 		height: process.stdout.rows || 24
@@ -11,6 +12,8 @@ const Record = () => {
 
 	// const [logoIndex, setLogoIndex] = useState(0);
 	const [logoColourIndex, setLogoColourIndex] = useState(0);
+
+	const [currentScreen, setCurrentScreen] = useState("menu");
 
 	const {exit} = useApp();
 
@@ -130,15 +133,14 @@ const Record = () => {
 								{title()}
 							</Box>
 							<Text> </Text>
-							{/* <Box borderStyle={selectedIndex === 2 ? "double" : undefined} padding={1} borderColor={undefined}> */}
-							<Box borderStyle="double" padding={1} borderColor={selectedIndex === 2 ? "white" : "black"}>
+							{/* <Box borderStyle="double" padding={1} borderColor={selectedIndex === 2 ? "white" : "black"}>
 								<Box borderStyle="round" borderColor="cyan">
 									<Text  borderColor="Green" borderStyle="round">  Click/[enter] To Start  </Text>
 								</Box>
 							</Box>
 							<Text> </Text>
-							{/* <Text color="yellow">daba dee daba daaa</Text> */}
-							<Text> </Text>
+							<Text> </Text> */}
+							{MoodSelection()}
 							<Text color="gray" alignSelf="center" >Press 'q' or ESC to quit</Text>	
 						</Box>
 					</Box>
@@ -148,4 +150,4 @@ const Record = () => {
 	);
 };
 
-export default Record;
+export default App;

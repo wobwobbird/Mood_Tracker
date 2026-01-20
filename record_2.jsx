@@ -88,7 +88,7 @@ const Record2 = () => {
                                 </Box>
 
                                 <Box borderStyle="round" borderColor="cyan">
-                                    <Text width="50"> 2 😀 </Text>
+                                    <Text padding={5} > 2 😀 </Text>
                                 </Box>
                                 <Box borderStyle="round" borderColor="cyan">
                                     <Text width="50"> 3 😐 </Text>
