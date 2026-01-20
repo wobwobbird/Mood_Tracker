@@ -9,14 +9,20 @@ const App = () => {
 		height: process.stdout.rows || 24
 	});
 	
-	const [selectedIndex, setSelectedIndex] = useState(0);
+	const [menuSelectedIndex, setMenuSelectedIndex] = useState(0);
 
 	const [currentScreen, setCurrentScreen] = useState("menu");
 
 	const handleLogoColourChange = useRef(() => {});
+	// const handleMoodChange = useRef(() => {});
+	const handleMoodLeftArrow = useRef(() => {});
+	const handleMoodRightArrow = useRef(() => {});
+	const handleMoodEnter = useRef(() => {});
+
+	const SELECTABLE_ELEMENTS = ["none", "logo", "button"];
 
 	const {exit} = useApp();
-
+	
 	// Handle keyboard input (like blessed's screen.key)
 	useInput((input, key) => {
 		if (input === 'q' || key.escape || (key.ctrl && input === 'c')) {
@@ -24,19 +30,19 @@ const App = () => {
 			exit();
 		}
 		if (key.downArrow || key.rightArrow) {
-			setSelectedIndex((selectedIndex + 1) % SELECTABLE_ELEMENTS.length);
+			if (currentScreen === "menu") setMenuSelectedIndex((menuSelectedIndex + 1) % SELECTABLE_ELEMENTS.length);
+			if (currentScreen === "mood") handleMoodLeftArrow.current();
 		}
 		if (key.upArrow || key.leftArrow) {
-			setSelectedIndex((selectedIndex - 1 + SELECTABLE_ELEMENTS.length) % SELECTABLE_ELEMENTS.length);
+			if (currentScreen === "menu") setMenuSelectedIndex((menuSelectedIndex - 1 + SELECTABLE_ELEMENTS.length) % SELECTABLE_ELEMENTS.length);
+			if (currentScreen === "mood") handleMoodRightArrow.current();
 		}
 		if (key.return) {
-			if (selectedIndex === 1) {
-				// setLogoColourIndex((logoColourIndex + 1) % colorSchemes.length)
-				handleLogoColourChange.current();;
+			if (currentScreen === "menu") {
+				if (menuSelectedIndex === 1) handleLogoColourChange.current();
+				if (menuSelectedIndex === 2) setCurrentScreen("mood");
 			}
-			if (selectedIndex === 2) {
-				setCurrentScreen("mood");
-			}
+			if (currentScreen === "mood") handleMoodEnter.current();
 		}
 	});
 
@@ -64,7 +70,6 @@ const App = () => {
 		};
 	}, []);
 
-	const SELECTABLE_ELEMENTS = ["none", "logo", "button"];
 
 	return (
 		<Box
@@ -80,19 +85,27 @@ const App = () => {
 							<Text> </Text>
 							{/* <Box borderStyle={selectedIndex === 1 ? "double" : undefined} padding={1} borderColor={undefined}> */}
 							{/* <Box borderStyle="double" padding={1} borderColor={undefined}> */}
-							<Box borderStyle="double" padding={1} borderColor={selectedIndex === 1 ? "white" : "black"}>
+							<Box borderStyle="double" padding={1} borderColor={menuSelectedIndex === 1 ? "white" : "black"}>
 								{<Logo onColourChangeRef={handleLogoColourChange} />}
 							</Box>
 							<Text> </Text>
 							{currentScreen === "menu" && (
-								<Box borderStyle="double" padding={1} borderColor={selectedIndex === 2 ? "white" : "black"}>
-									<Box borderStyle="round" borderColor="cyan">
-										<Text  borderColor="Green" borderStyle="round">  Press [enter] To Start  </Text>
-									</Box>
+								<Box borderStyle="round" borderColor={menuSelectedIndex === 2 ? "green" : "cyan"} backgroundColor={menuSelectedIndex === 2 ? "green" : undefined}>
+									<Text color="white">  Press [enter] To Start  </Text>
 								</Box>
+								// <Box borderStyle="double" padding={1} borderColor={menuSelectedIndex === 2 ? "white" : "black"}>
+								// 	<Box borderStyle="round" borderColor="cyan">
+								// 		<Text  borderColor="Green" borderStyle="round">  Press [enter] To Start  </Text>
+								// 	</Box>
+								// </Box>
 							)}
 							{currentScreen === "mood" && (
-								<Text>Hello I'm mood</Text>
+								// <Text>Hello I'm mood</Text>§
+								<MoodSelection
+									onLeftArrowRef={handleMoodLeftArrow}
+									onRightArrowRef={handleMoodRightArrow}
+									onEnterRef={handleMoodEnter}
+								/>
 							)}
 							<Text> </Text>
 							<Text> </Text>

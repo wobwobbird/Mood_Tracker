@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import {render, Text, Box, useInput, useApp} from 'ink';
 
-const Record2 = () => {
+const skdcmkmdc = () => {
 	const [dimensions, setDimensions] = useState({
 		width: process.stdout.columns || 80,
 		height: process.stdout.rows || 24
@@ -109,4 +109,4 @@ const Record2 = () => {
 	);
 };
 
-export default Record2;
+export default skdcmkmdc;
