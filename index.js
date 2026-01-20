@@ -43,7 +43,7 @@ if (process.argv[2] === 'mood') {
         
         // Cleanup on exit
         const cleanup = () => {
-            process.stdout.write('\x1b[?25h'); // Show cursor
+            process.stdout.write('\x1b[?25h'); // Show cursorrecord
             process.stdin.setRawMode(false);
             process.stdin.pause();
             instance.unmount();
