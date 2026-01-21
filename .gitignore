@@ -31,3 +31,6 @@ out/
 # Temporary files
 .tmp/
 temp/
+
+# Databases
+*.db

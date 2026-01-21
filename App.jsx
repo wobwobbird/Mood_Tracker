@@ -9,7 +9,7 @@ const App = () => {
 		height: process.stdout.rows || 24
 	});
 	
-	const [menuSelectedIndex, setMenuSelectedIndex] = useState(0);
+	const [menuSelectedIndex, setMenuSelectedIndex] = useState(1);
 
 	const [currentScreen, setCurrentScreen] = useState("menu");
 
@@ -19,7 +19,7 @@ const App = () => {
 	const handleMoodRightArrow = useRef(() => {});
 	const handleMoodEnter = useRef(() => {});
 
-	const SELECTABLE_ELEMENTS = ["none", "logo", "button"];
+	const SELECTABLE_ELEMENTS = ["logo", "none", "button"];
 
 	const {exit} = useApp();
 	
@@ -39,7 +39,7 @@ const App = () => {
 		}
 		if (key.return) {
 			if (currentScreen === "menu") {
-				if (menuSelectedIndex === 1) handleLogoColourChange.current();
+				if (menuSelectedIndex === 0) handleLogoColourChange.current();
 				if (menuSelectedIndex === 2) setCurrentScreen("mood");
 			}
 			if (currentScreen === "mood") handleMoodEnter.current();
@@ -85,7 +85,7 @@ const App = () => {
 							<Text> </Text>
 							{/* <Box borderStyle={selectedIndex === 1 ? "double" : undefined} padding={1} borderColor={undefined}> */}
 							{/* <Box borderStyle="double" padding={1} borderColor={undefined}> */}
-							<Box borderStyle="double" padding={1} borderColor={menuSelectedIndex === 1 ? "white" : "black"}>
+							<Box borderStyle="double" padding={1} borderColor={menuSelectedIndex === 0 ? "white" : "black"}>
 								{<Logo onColourChangeRef={handleLogoColourChange} />}
 							</Box>
 							<Text> </Text>

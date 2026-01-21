@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {render, Text, Box, useInput, useApp} from 'ink';
+import { saveMoodEntry } from './database.js';
 
 const MoodSelection = ({onLeftArrowRef, onRightArrowRef, onEnterRef}) => {
 
@@ -23,6 +24,7 @@ const MoodSelection = ({onLeftArrowRef, onRightArrowRef, onEnterRef}) => {
         onEnterRef.current = () => {
             if (selectButtonIndex !== 0) {
                 setMoodSelected(true);
+                saveMoodEntry();
                 
             }
         };
