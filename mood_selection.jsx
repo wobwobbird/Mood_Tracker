@@ -24,7 +24,7 @@ const MoodSelection = ({onLeftArrowRef, onRightArrowRef, onEnterRef}) => {
         onEnterRef.current = () => {
             if (selectButtonIndex !== 0) {
                 setMoodSelected(true);
-                saveMoodEntry();
+                saveMoodEntry(selectButtonIndex, null);
                 
             }
         };
