@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import {render, Text, Box, useInput, useApp} from 'ink';
 import { saveMoodEntry } from './database.js';
+import TextInput from "ink-text-input";
 
 const MoodSelection = ({onLeftArrowRef, onRightArrowRef, onEnterRef}) => {
 
@@ -8,42 +9,50 @@ const MoodSelection = ({onLeftArrowRef, onRightArrowRef, onEnterRef}) => {
 
     const [moodSelected, setMoodSelected] = useState(false);
 
-    // const [moodChosen, setMoodChosen] = useState(false);
-
     const [writeNote, setWriteNote] = useState(true);
+
+    const [moodInputVisable, setMoodInputVisable] = useState(false);
+
+    const [textInput, setTextInput] = useState("");
 
     useEffect(() => {
         onLeftArrowRef.current = () => {
-            setSelectButtonIndex(prev => (prev + 1) % 6);
-        };
-    }, [onLeftArrowRef]);
-
-    useEffect(() => {
-        onRightArrowRef.current = () => {
-            setSelectButtonIndex(prev => ((prev - 1 + 6) % 6));
-        };
-    }, [onRightArrowRef]);
-
-    useEffect(() => {
-        onEnterRef.current = () => {
-            if (selectButtonIndex !== 0) {
-                if (moodSelected === false) {
-                    setMoodSelected(true);
-                }
-                if (moodSelected === true) {
-                    if (writeNote === flase) {
-                        saveMoodEntry(selectButtonIndex, null);
-                    }
-                    if (writeNote === true) {
-                        saveMoodEntry(selectButtonIndex, null);
-                    }
-
-
-                }
-                
+            if (moodSelected === false) {
+                setSelectButtonIndex(prev => (prev + 1) % 6);
+            }
+            if (moodSelected === true) {
+                setWriteNote(prev => !prev);
             }
         };
-    }, [onEnterRef, selectButtonIndex]);
+    }, [onLeftArrowRef, moodSelected]);
+    
+    useEffect(() => {
+        onRightArrowRef.current = () => {
+            if (moodSelected === false) {
+                setSelectButtonIndex(prev => ((prev - 1 + 6) % 6));
+            }
+            if (moodSelected === true) {
+                setWriteNote(prev => !prev);
+            }
+        };
+    }, [onRightArrowRef, moodSelected]);
+    
+    useEffect(() => {
+        onEnterRef.current = () => {
+            if (moodSelected === false && selectButtonIndex !== 0) {
+                setMoodSelected(true);
+            }
+            if (moodSelected === true) {
+                if (writeNote === false) {
+                    saveMoodEntry(selectButtonIndex, null);
+                }
+                if (writeNote === true) {
+                    // saveMoodEntry(selectButtonIndex, null);
+                    setMoodInputVisable(true);
+                }
+            }
+        };
+    }, [onEnterRef, selectButtonIndex, writeNote]);
 
     // if (currentScreen === "menu") setMenuSelectedIndex((menuSelectedIndex - 1 + SELECTABLE_ELEMENTS.length) % SELECTABLE_ELEMENTS.length);
 
@@ -98,19 +107,29 @@ const MoodSelection = ({onLeftArrowRef, onRightArrowRef, onEnterRef}) => {
                     </Box>
                 </>
             )}
-            {moodSelected === true && (
+            {moodSelected === true && moodInputVisable === false && (
                 <>
                     {/* <Text width="50"> Thank you for choosing</Text> */}
                     <Text > Would you like to leave a note?</Text>
                     <Box alignItems='row' gap="5" paddingx={2} paddingY={2}>
                         <Text 
                             borderStyle="round" 
-                            backgroundColor={selectButtonIndex === 3 ? "green" : undefined}
-                        >Yes</Text>
-                        <Text borderStyle="round" >No</Text>
+                            backgroundColor={writeNote === true ? "green" : undefined}
+                            >Yes</Text>
+                        <Text 
+                            borderStyle="round" 
+                            backgroundColor={writeNote === false ? "green" : undefined}
+                        >No</Text>
                     </Box>
                 </>
             )}
+            {moodSelected === true && moodInputVisable === true && (
+                <TextInput
+                    value={textInput}
+                    onChange={setTextInput}
+                />
+            )}
+
             <Text> </Text>
         </Box>
 	);
