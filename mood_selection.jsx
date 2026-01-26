@@ -8,6 +8,10 @@ const MoodSelection = ({onLeftArrowRef, onRightArrowRef, onEnterRef}) => {
 
     const [moodSelected, setMoodSelected] = useState(false);
 
+    // const [moodChosen, setMoodChosen] = useState(false);
+
+    const [writeNote, setWriteNote] = useState(true);
+
     useEffect(() => {
         onLeftArrowRef.current = () => {
             setSelectButtonIndex(prev => (prev + 1) % 6);
@@ -23,8 +27,19 @@ const MoodSelection = ({onLeftArrowRef, onRightArrowRef, onEnterRef}) => {
     useEffect(() => {
         onEnterRef.current = () => {
             if (selectButtonIndex !== 0) {
-                setMoodSelected(true);
-                saveMoodEntry(selectButtonIndex, null);
+                if (moodSelected === false) {
+                    setMoodSelected(true);
+                }
+                if (moodSelected === true) {
+                    if (writeNote === flase) {
+                        saveMoodEntry(selectButtonIndex, null);
+                    }
+                    if (writeNote === true) {
+                        saveMoodEntry(selectButtonIndex, null);
+                    }
+
+
+                }
                 
             }
         };
@@ -44,26 +59,58 @@ const MoodSelection = ({onLeftArrowRef, onRightArrowRef, onEnterRef}) => {
                     <Text width="50"> Record how you are feeling now</Text>
                     <Text> </Text>
                     <Box alignItems='row' gap="10">
-                        <Box borderStyle="round" borderColor={selectButtonIndex === 1 ? "green" : "cyan"} backgroundColor={selectButtonIndex === 1 ? "green" : undefined}>
+                        <Box 
+                            borderStyle="round" 
+                            borderColor={selectButtonIndex === 1 ? "green" : "cyan"}
+                            backgroundColor={selectButtonIndex === 1 ? "green" : undefined}
+                        >
                             <Text width="50"> 1 🤩 </Text>
                         </Box>
 
-                        <Box borderStyle="round" borderColor={selectButtonIndex === 2 ? "green" : "cyan"} backgroundColor={selectButtonIndex === 2 ? "green" : undefined}>
+                        <Box 
+                            borderStyle="round" 
+                            borderColor={selectButtonIndex === 2 ? "green" : "cyan"}
+                            backgroundColor={selectButtonIndex === 2 ? "green" : undefined}
+                        >
                             <Text width="50"> 2 😀 </Text>
                         </Box>
-                        <Box borderStyle="round" borderColor={selectButtonIndex === 3 ? "green" : "cyan"} backgroundColor={selectButtonIndex === 3 ? "green" : undefined}>
+                        <Box 
+                            borderStyle="round" 
+                            borderColor={selectButtonIndex === 3 ? "green" : "cyan"}
+                            backgroundColor={selectButtonIndex === 3 ? "green" : undefined}
+                        >
                             <Text width="50"> 3 😐 </Text>
                         </Box>
-                        <Box borderStyle="round" borderColor={selectButtonIndex === 4 ? "green" : "cyan"} backgroundColor={selectButtonIndex === 4 ? "green" : undefined}>
+                        <Box 
+                            borderStyle="round" 
+                            borderColor={selectButtonIndex === 4 ? "green" : "cyan"}
+                            backgroundColor={selectButtonIndex === 4 ? "green" : undefined}
+                        >
                             <Text width="50"> 4 🙁 </Text>
                         </Box>
-                        <Box borderStyle="round" borderColor={selectButtonIndex === 5 ? "green" : "cyan"} backgroundColor={selectButtonIndex === 5 ? "green" : undefined}>
+                        <Box 
+                            borderStyle="round" 
+                            borderColor={selectButtonIndex === 5 ? "green" : "cyan"}
+                            backgroundColor={selectButtonIndex === 5 ? "green" : undefined}
+                        >
                             <Text width="50"> 5 😡 </Text>
                         </Box>
                     </Box>
                 </>
             )}
-            {moodSelected === true && <Text width="50"> Thank you for choosing</Text>}
+            {moodSelected === true && (
+                <>
+                    {/* <Text width="50"> Thank you for choosing</Text> */}
+                    <Text > Would you like to leave a note?</Text>
+                    <Box alignItems='row' gap="5" paddingx={2} paddingY={2}>
+                        <Text 
+                            borderStyle="round" 
+                            backgroundColor={selectButtonIndex === 3 ? "green" : undefined}
+                        >Yes</Text>
+                        <Text borderStyle="round" >No</Text>
+                    </Box>
+                </>
+            )}
             <Text> </Text>
         </Box>
 	);
