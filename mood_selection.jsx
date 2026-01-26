@@ -15,6 +15,8 @@ const MoodSelection = ({onLeftArrowRef, onRightArrowRef, onEnterRef}) => {
 
     const [textInput, setTextInput] = useState("");
 
+    const {exit} = useApp();
+
     useEffect(() => {
         onLeftArrowRef.current = () => {
             if (moodSelected === false) {
@@ -45,18 +47,21 @@ const MoodSelection = ({onLeftArrowRef, onRightArrowRef, onEnterRef}) => {
             if (moodSelected === true) {
                 if (writeNote === false) {
                     saveMoodEntry(selectButtonIndex, null);
+                    exit();
                 }
                 if (writeNote === true) {
-                    // saveMoodEntry(selectButtonIndex, null);
-                    setMoodInputVisable(true);
+                    if (moodInputVisable === false) {
+                        setMoodInputVisable(true);
+                    } else {
+                        if (textInput !== "") {
+                            saveMoodEntry(selectButtonIndex, textInput);
+                            exit();
+                        }
+                    }
                 }
             }
         };
     }, [onEnterRef, selectButtonIndex, writeNote]);
-
-    // if (currentScreen === "menu") setMenuSelectedIndex((menuSelectedIndex - 1 + SELECTABLE_ELEMENTS.length) % SELECTABLE_ELEMENTS.length);
-
-
 
 	return (
         // <Box flexDirection="column" width="100%" height="100%" alignItems='center' > 
