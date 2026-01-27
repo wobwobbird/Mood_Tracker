@@ -13,6 +13,10 @@ const MoodSelection = ({onLeftArrowRef, onRightArrowRef, onEnterRef}) => {
 
     const [moodInputVisable, setMoodInputVisable] = useState(false);
 
+    const [inputOver, setInputOver] = useState(false);
+
+
+
     const [textInput, setTextInput] = useState("");
 
     const {exit} = useApp();
@@ -44,10 +48,10 @@ const MoodSelection = ({onLeftArrowRef, onRightArrowRef, onEnterRef}) => {
             if (moodSelected === false && selectButtonIndex !== 0) {
                 setMoodSelected(true);
             }
-            if (moodSelected === true) {
+            if (moodSelected === true && inputOver === false) {
                 if (writeNote === false) {
                     saveMoodEntry(selectButtonIndex, null);
-                    exit();
+                    setInputOver(true);
                 }
                 if (writeNote === true) {
                     if (moodInputVisable === false) {
@@ -55,10 +59,13 @@ const MoodSelection = ({onLeftArrowRef, onRightArrowRef, onEnterRef}) => {
                     } else {
                         if (textInput !== "") {
                             saveMoodEntry(selectButtonIndex, textInput);
-                            exit();
+                            setInputOver(true);
                         }
                     }
                 }
+            }
+            if (inputOver === true) {
+                exit();
             }
         };
     }, [onEnterRef, selectButtonIndex, writeNote]);
@@ -128,13 +135,13 @@ const MoodSelection = ({onLeftArrowRef, onRightArrowRef, onEnterRef}) => {
                     </Box>
                 </>
             )}
-            {moodSelected === true && moodInputVisable === true && (
+            {moodSelected === true && moodInputVisable === true && inputOver === false && (
                 <TextInput
                     value={textInput}
                     onChange={setTextInput}
                 />
             )}
-
+            {inputOver === true && <Text>Thank you have a good day</Text>}
             <Text> </Text>
         </Box>
 	);
