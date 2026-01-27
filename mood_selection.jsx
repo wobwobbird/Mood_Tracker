@@ -52,6 +52,7 @@ const MoodSelection = ({onLeftArrowRef, onRightArrowRef, onEnterRef}) => {
                 if (writeNote === false) {
                     saveMoodEntry(selectButtonIndex, null);
                     setInputOver(true);
+                    exit();
                 }
                 if (writeNote === true) {
                     if (moodInputVisable === false) {
@@ -60,15 +61,16 @@ const MoodSelection = ({onLeftArrowRef, onRightArrowRef, onEnterRef}) => {
                         if (textInput !== "") {
                             saveMoodEntry(selectButtonIndex, textInput);
                             setInputOver(true);
+                            exit();
                         }
                     }
                 }
             }
             if (inputOver === true) {
-                exit();
+                // exit();
             }
         };
-    }, [onEnterRef, selectButtonIndex, writeNote]);
+    }, [onEnterRef, selectButtonIndex, writeNote, moodSelected, inputOver, moodInputVisable, textInput]);
 
 	return (
         // <Box flexDirection="column" width="100%" height="100%" alignItems='center' > 
@@ -119,7 +121,7 @@ const MoodSelection = ({onLeftArrowRef, onRightArrowRef, onEnterRef}) => {
                     </Box>
                 </>
             )}
-            {moodSelected === true && moodInputVisable === false && (
+            {moodSelected === true && moodInputVisable === false && inputOver === false && (
                 <>
                     {/* <Text width="50"> Thank you for choosing</Text> */}
                     <Text > Would you like to leave a note?</Text>
