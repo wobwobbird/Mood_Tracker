@@ -1,8 +1,11 @@
 import React, {useState, useEffect} from 'react';
 import {render, Text, Box, useInput, useApp} from 'ink';
+import { getLogoColourIndex } from './database.js';
 
 const Logo = ({ onColourChangeRef }) => {
-	const [logoColourIndex, setLogoColourIndex] = useState(0);
+	const [logoColourIndex, setLogoColourIndex] = useState(getLogoColourIndex());
+
+
 
 	let colorSchemes = [
 

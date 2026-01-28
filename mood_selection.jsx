@@ -3,6 +3,7 @@ import {render, Text, Box, useInput, useApp} from 'ink';
 import { saveMoodEntry } from './database.js';
 import TextInput from "ink-text-input";
 
+
 const MoodSelection = ({onLeftArrowRef, onRightArrowRef, onEnterRef}) => {
 
     const [selectButtonIndex, setSelectButtonIndex] = useState(0);

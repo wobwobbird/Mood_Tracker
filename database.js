@@ -31,9 +31,14 @@ db.exec(`
 export function getLogoColourIndex() {
     const colour = db.prepare(`SELECT value FROM settings WHERE key = 'Colour'`);
     const object = colour.get();
-    return object?.value;
+    if (object?.value === undefined) {
+        return 0;
+    } else {
+        return object.value;
+    }
+    // return object?.value;
 }
 
 export function saveLogoColourIndex(colourScheme) {
-    
+
 }
