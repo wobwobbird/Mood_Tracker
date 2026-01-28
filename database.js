@@ -20,3 +20,20 @@ export function saveMoodEntry(moodValue, notes) {
     const stmt = db.prepare(`INSERT INTO mood_board (mood_value, notes) VALUES (?, ?)`);
     stmt.run(moodValue, notes || null);
 }
+
+db.exec(`
+    CREATE TABLE IF NOT EXISTS settings (
+        key TEXT PRIMARY KEY,
+        value TEXT NOT NULL
+    )
+`);
+
+export function getLogoColourIndex() {
+    const colour = db.prepare(`SELECT value FROM settings WHERE key = 'Colour'`);
+    const object = colour.get();
+    return object?.value;
+}
+
+export function saveLogoColourIndex(colourScheme) {
+    
+}
