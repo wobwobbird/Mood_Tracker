@@ -28,17 +28,18 @@ db.exec(`
     )
 `);
 
-export function getLogoColourIndex() {
+export function getLogoColourIndexFromDb() {
     const colour = db.prepare(`SELECT value FROM settings WHERE key = 'Colour'`);
     const object = colour.get();
     if (object?.value === undefined) {
         return 0;
     } else {
-        return object.value;
+        return parseInt(object.value);
     }
     // return object?.value;
 }
 
 export function saveLogoColourIndex(colourScheme) {
-
+    const prep = db.prepare(`INSERT OR REPLACE INTO settings (key, value) VALUES (?, ?)`)
+    prep.run("Colour", colourScheme);
 }

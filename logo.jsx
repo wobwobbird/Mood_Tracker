@@ -1,14 +1,9 @@
-import React, {useState, useEffect} from 'react';
-import {render, Text, Box, useInput, useApp} from 'ink';
-import { getLogoColourIndex } from './database.js';
+import React, {useEffect} from 'react';
+import {Text, Box} from 'ink';
 
-const Logo = ({ onColourChangeRef }) => {
-	const [logoColourIndex, setLogoColourIndex] = useState(getLogoColourIndex());
+const Logo = ({ onColourChangeRef, logoColourIndex, setLogoColourIndex }) => {
 
-
-
-	let colorSchemes = [
-
+	const colorSchemes = [
 		["blue", "blueBright", "cyan", "cyanBright", "blue", "cyan", "blueBright", "cyanBright", "blue", "cyan", "blueBright"], // ocean theme - deep blues and cyans
 		["green", "greenBright", "cyanBright", "green", "greenBright", "cyanBright", "green", "greenBright", "cyanBright", "green", "greenBright"], // neon green theme - vibrant greens and cyans
 		["white", "white", "white", "white", "white", "white", "white", "white", "white", "white", "white"], //all white
@@ -22,7 +17,7 @@ const Logo = ({ onColourChangeRef }) => {
         onColourChangeRef.current = () => {
             setLogoColourIndex(prev => (prev + 1) % colorSchemes.length);
         };
-    }, [onColourChangeRef]);
+    }, [onColourChangeRef, setLogoColourIndex, colorSchemes.length]);
 
     const title = () => {
         return (

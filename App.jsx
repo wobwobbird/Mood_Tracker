@@ -2,6 +2,7 @@ import React, {useState, useEffect, useRef} from 'react';
 import {render, Text, Box, useInput, useApp} from 'ink';
 import MoodSelection from './mood_selection';
 import Logo from './logo';
+import { saveLogoColourIndex, getLogoColourIndexFromDb } from './database';
 
 const App = () => {
 	const [dimensions, setDimensions] = useState({
@@ -12,9 +13,10 @@ const App = () => {
 	const [menuSelectedIndex, setMenuSelectedIndex] = useState(1);
 
 	const [currentScreen, setCurrentScreen] = useState("menu");
+	
+	const [logoColourIndex, setLogoColourIndex] = useState(getLogoColourIndexFromDb());
 
 	const handleLogoColourChange = useRef(() => {});
-	// const handleMoodChange = useRef(() => {});
 	const handleMoodLeftArrow = useRef(() => {});
 	const handleMoodRightArrow = useRef(() => {});
 	const handleMoodEnter = useRef(() => {});
@@ -23,10 +25,9 @@ const App = () => {
 
 	const {exit} = useApp();
 	
-	// Handle keyboard input (like blessed's screen.key)
 	useInput((input, key) => {
 		if (input === 'q' || key.escape || (key.ctrl && input === 'c')) {
-			process.stdout.write('\x1b[?25h'); // Show cursor
+			process.stdout.write('\x1b[?25h');
 			exit();
 		}
 		if (key.downArrow || key.rightArrow) {
@@ -40,14 +41,16 @@ const App = () => {
 		if (key.return) {
 			if (currentScreen === "menu") {
 				if (menuSelectedIndex === 0) handleLogoColourChange.current();
-				if (menuSelectedIndex === 2) setCurrentScreen("mood");
+				if (menuSelectedIndex === 2) {
+					saveLogoColourIndex(logoColourIndex);
+					setCurrentScreen("mood");
+				}
 			}
 			if (currentScreen === "mood") handleMoodEnter.current();
 		}
 	});
 
 	useEffect(() => {
-		// Handle terminal resize
 		const handleResize = () => {
 			setDimensions({
 				width: process.stdout.columns || 80,
@@ -56,8 +59,7 @@ const App = () => {
 		};
 
 		process.stdout.on('resize', handleResize);
-		
-		// Initial dimensions check
+	
 		if (process.stdout.columns && process.stdout.rows) {
 			setDimensions({
 				width: process.stdout.columns,
@@ -69,7 +71,6 @@ const App = () => {
 			process.stdout.removeListener('resize', handleResize);
 		};
 	}, []);
-
 
 	return (
 		<Box
@@ -83,24 +84,16 @@ const App = () => {
 					<Box borderStyle={dimensions.height > 30 ? "round" : undefined} borderColor="cyan"> 	
 						<Box flexDirection="column" width="100%" height="100%" alignItems='center' justifyContent='center'>
 							<Text> </Text>
-							{/* <Box borderStyle={selectedIndex === 1 ? "double" : undefined} padding={1} borderColor={undefined}> */}
-							{/* <Box borderStyle="double" padding={1} borderColor={undefined}> */}
 							<Box borderStyle="double" padding={1} borderColor={menuSelectedIndex === 0 ? "white" : "black"}>
-								{<Logo onColourChangeRef={handleLogoColourChange} />}
+								{<Logo onColourChangeRef={handleLogoColourChange} logoColourIndex={logoColourIndex} setLogoColourIndex={setLogoColourIndex} />}
 							</Box>
 							<Text> </Text>
 							{currentScreen === "menu" && (
 								<Box borderStyle="round" borderColor={menuSelectedIndex === 2 ? "green" : "cyan"} backgroundColor={menuSelectedIndex === 2 ? "green" : undefined}>
 									<Text color="white">  Press [enter] To Start  </Text>
 								</Box>
-								// <Box borderStyle="double" padding={1} borderColor={menuSelectedIndex === 2 ? "white" : "black"}>
-								// 	<Box borderStyle="round" borderColor="cyan">
-								// 		<Text  borderColor="Green" borderStyle="round">  Press [enter] To Start  </Text>
-								// 	</Box>
-								// </Box>
 							)}
 							{currentScreen === "mood" && (
-								// <Text>Hello I'm mood</Text>§
 								<MoodSelection
 									onLeftArrowRef={handleMoodLeftArrow}
 									onRightArrowRef={handleMoodRightArrow}
@@ -109,7 +102,6 @@ const App = () => {
 							)}
 							<Text> </Text>
 							<Text> </Text>
-							{/* {MoodSelection()} */}
 							<Text color="gray" alignSelf="center" >Press 'q' or ESC to quit</Text>	
 						</Box>
 					</Box>
