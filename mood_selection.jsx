@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import {render, Text, Box, useInput, useApp} from 'ink';
 import { saveMoodEntry } from './database.js';
 import TextInput from "ink-text-input";
+import BigText from 'ink-big-text';
 
 
 const MoodSelection = ({onLeftArrowRef, onRightArrowRef, onEnterRef}) => {
@@ -78,7 +79,7 @@ const MoodSelection = ({onLeftArrowRef, onRightArrowRef, onEnterRef}) => {
         <Box flexDirection="column" alignItems='center' > 
             <Text> </Text>
             <Text> </Text>
-            {moodSelected === false && (
+            {/* {moodSelected === false && (
                 <>
                     <Text width="50"> Record how you are feeling now</Text>
                     <Text> </Text>
@@ -121,20 +122,81 @@ const MoodSelection = ({onLeftArrowRef, onRightArrowRef, onEnterRef}) => {
                         </Box>
                     </Box>
                 </>
+            )} */}
+            {moodSelected === false && (
+                <>
+                    <BigText text="Record how you are feeling now" font="tiny"/>
+                    <Text> </Text>
+                    <Box alignItems='row' gap="10">
+                        <Box 
+                            borderStyle="round" 
+                            borderColor={selectButtonIndex === 1 ? "green" : "cyan"}
+                            backgroundColor={selectButtonIndex === 1 ? "green" : undefined}
+                        >
+                            <Box flexDirection="column" alignItems="center">
+                                <BigText text="1"/>
+                                <Text>🤩</Text>
+                            </Box>
+                        </Box>
+                        <Box 
+                            borderStyle="round" 
+                            borderColor={selectButtonIndex === 2 ? "green" : "cyan"}
+                            backgroundColor={selectButtonIndex === 2 ? "green" : undefined}
+                        >
+                            <Box flexDirection="column" alignItems="center">
+                                <BigText text="2"/>
+                                <Text>😀</Text>
+                            </Box>
+                        </Box>
+                        <Box 
+                            borderStyle="round" 
+                            borderColor={selectButtonIndex === 3 ? "green" : "cyan"}
+                            backgroundColor={selectButtonIndex === 3 ? "green" : undefined}
+                        >
+                            <Box flexDirection="column" alignItems="center">
+                                <BigText text="3"/>
+                                <Text>😐</Text>
+                            </Box>
+                        </Box>
+                        <Box 
+                            borderStyle="round" 
+                            borderColor={selectButtonIndex === 4 ? "green" : "cyan"}
+                            backgroundColor={selectButtonIndex === 4 ? "green" : undefined}
+                        >
+                            <Box flexDirection="column" alignItems="center">
+                                <BigText text="4"/>
+                                <Text>🙁</Text>
+                            </Box>
+                        </Box>
+                        <Box 
+                            borderStyle="round" 
+                            borderColor={selectButtonIndex === 5 ? "green" : "cyan"}
+                            backgroundColor={selectButtonIndex === 5 ? "green" : undefined}
+                        >
+                            <Box flexDirection="column" alignItems="center">
+                                <BigText text="5"/>
+                                <Text>😡</Text>
+                            </Box>
+                        </Box>
+                    </Box>
+                </>
             )}
             {moodSelected === true && moodInputVisable === false && inputOver === false && (
                 <>
-                    {/* <Text width="50"> Thank you for choosing</Text> */}
-                    <Text > Would you like to leave a note?</Text>
+                    <BigText text="Leave a note?" font="tiny"/>
                     <Box alignItems='row' gap="5" paddingx={2} paddingY={2}>
-                        <Text 
+                        <Box
                             borderStyle="round" 
-                            backgroundColor={writeNote === true ? "green" : undefined}
-                            >Yes</Text>
-                        <Text 
+                            backgroundColor={writeNote === true ? "green" : undefined}                        
+                        >
+                            <BigText text="Yes"/>
+                        </Box>
+                        <Box
                             borderStyle="round" 
-                            backgroundColor={writeNote === false ? "green" : undefined}
-                        >No</Text>
+                            backgroundColor={writeNote === false ? "green" : undefined}     
+                        >
+                            <BigText text="No"/>
+                        </Box>
                     </Box>
                 </>
             )}

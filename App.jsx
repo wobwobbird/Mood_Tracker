@@ -4,6 +4,7 @@ import MoodSelection from './mood_selection';
 import Logo from './logo';
 import { saveLogoColourIndex, getLogoColourIndexFromDb } from './database';
 import { borderColourSchemes } from './colourScheme';
+import BigText from 'ink-big-text';
 
 const App = () => {
 	const [dimensions, setDimensions] = useState({
@@ -91,7 +92,8 @@ const App = () => {
 							<Text> </Text>
 							{currentScreen === "menu" && (
 								<Box borderStyle="round" borderColor={menuSelectedIndex === 2 ? "green" : "cyan"} backgroundColor={menuSelectedIndex === 2 ? "green" : undefined}>
-									<Text color="white">  Press [enter] To Start  </Text>
+									{/* <Text color="white">  Press [enter] To Start  </Text> */}
+									<BigText text="Press [enter] To Start" font="tiny" />
 								</Box>
 							)}
 							{currentScreen === "mood" && (
