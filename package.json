@@ -2,6 +2,7 @@
   "dependencies": {
     "better-sqlite3": "^12.6.2",
     "ink": "^6.6.0",
+    "ink-big-text": "^2.0.0",
     "ink-text-input": "^6.0.0",
     "react": "^19.2.3"
   },
