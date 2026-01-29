@@ -36,7 +36,6 @@ export function getLogoColourIndexFromDb() {
     } else {
         return parseInt(object.value);
     }
-    // return object?.value;
 }
 
 export function saveLogoColourIndex(colourScheme) {

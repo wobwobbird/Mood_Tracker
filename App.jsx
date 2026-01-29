@@ -3,6 +3,7 @@ import {render, Text, Box, useInput, useApp} from 'ink';
 import MoodSelection from './mood_selection';
 import Logo from './logo';
 import { saveLogoColourIndex, getLogoColourIndexFromDb } from './database';
+import { borderColourSchemes } from './colourScheme';
 
 const App = () => {
 	const [dimensions, setDimensions] = useState({
@@ -75,13 +76,13 @@ const App = () => {
 	return (
 		<Box
 			borderStyle={dimensions.height > 30 ? "round" : undefined}
-			borderColor="cyan"
+			borderColor={borderColourSchemes[logoColourIndex][0]}
 			width={dimensions.width}
 			height={dimensions.height}
 		> 
-			<Box borderStyle={dimensions.height > 30 ? "round" : undefined} borderColor="cyan"> 	
-				<Box borderStyle={dimensions.height > 30 ? "round" : undefined} borderColor="cyan"> 	
-					<Box borderStyle={dimensions.height > 30 ? "round" : undefined} borderColor="cyan"> 	
+			<Box borderStyle={dimensions.height > 30 ? "round" : undefined} borderColor={borderColourSchemes[logoColourIndex][1]}> 	
+				<Box borderStyle={dimensions.height > 30 ? "round" : undefined} borderColor={borderColourSchemes[logoColourIndex][2]}> 	
+					<Box borderStyle={dimensions.height > 30 ? "round" : undefined} borderColor={borderColourSchemes[logoColourIndex][3]}> 	
 						<Box flexDirection="column" width="100%" height="100%" alignItems='center' justifyContent='center'>
 							<Text> </Text>
 							<Box borderStyle="double" padding={1} borderColor={menuSelectedIndex === 0 ? "white" : "black"}>
