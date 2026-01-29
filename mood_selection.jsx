@@ -4,6 +4,187 @@ import { saveMoodEntry } from './database.js';
 import TextInput from "ink-text-input";
 import BigText from 'ink-big-text';
 
+const Face1 = () => (
+    <>
+        <Text>      </Text>
+        <Text>  ██  ██</Text>
+        <Text>      </Text>
+        <Text>  ██████</Text>
+        <Text>  █    █</Text>
+        <Text>   ████ </Text>
+        <Text>      </Text>
+
+    </>
+);
+const Face2 = () => (
+    <>
+        <Text>      </Text>
+        <Text>  ██  ██</Text>
+        <Text>      </Text>
+        <Text>  █    █</Text>
+        <Text>  █    █</Text>
+        <Text>   ████ </Text>
+        <Text>      </Text>
+
+    </>
+);
+
+const Face3 = () => (
+    <>
+        <Text>      </Text>
+        <Text>  ██  ██</Text>
+        <Text>      </Text>
+        <Text>      </Text>
+        <Text>  ██████</Text>
+        <Text>      </Text>
+        <Text>      </Text>
+
+    </>
+);
+
+const Face4 = () => (
+    <>
+        <Text>      </Text>
+        <Text>  ██  ██</Text>
+        <Text>      </Text>
+        <Text>   ████ </Text>
+        <Text>  █    █</Text>
+        <Text>  █    █</Text>
+        <Text>      </Text>
+
+    </>
+);
+
+const Face5 = () => (
+    <>
+        <Text>      </Text>
+        <Text>  █    █</Text>
+        <Text>  ██  ██</Text>
+        <Text>      </Text>
+        <Text>   ████ </Text>
+        <Text>  █    █</Text>
+        <Text>      </Text>
+        <Text>      </Text>
+    </>
+);
+
+
+
+
+
+
+// Unicode block faces (10x10)
+const ASCII_FACES = {
+    1: `  ░░░░░░░░░░
+  ░░░░░░░░░░
+  ░░██░░██░░
+  ░░░░░░░░░░
+  ░░░░░░░░░░
+  ░░░░░░░░░░
+  ░░░███░░░░
+  ░░░░░░░░░░
+  ░░░░░░░░░░
+  ░░░░░░░░░░`,  // Very Happy (🤩) - big smile
+    2: `  ░░░░░░░░░░
+  ░░░░░░░░░░
+  ░░██░░██░░
+  ░░░░░░░░░░
+  ░░░░░░░░░░
+  ░░░░░░░░░░
+  ░░░███░░░░
+  ░░░░░░░░░░
+  ░░░░░░░░░░
+  ░░░░░░░░░░`,  // Happy (😀) - smile
+    3: `  ░░░░░░░░░░
+  ░░░░░░░░░░
+  ░░██░░██░░
+  ░░░░░░░░░░
+  ░░░░░░░░░░
+  ░░░░░░░░░░
+  ░░░███░░░░
+  ░░░░░░░░░░
+  ░░░░░░░░░░
+  ░░░░░░░░░░`,  // Neutral (😐) - straight mouth
+    4: `  ░░░░░░░░░░
+  ░░░░░░░░░░
+  ░░██░░██░░
+  ░░░░░░░░░░
+  ░░░░░░░░░░
+  ░░░░░░░░░░
+  ░░░░░░░░░░
+  ░░░███░░░░
+  ░░░░░░░░░░
+  ░░░░░░░░░░`,  // Sad (🙁) - frown
+    5: `  ░░░░░░░░░░
+  ░░░░░░░░░░
+  ░░██░░██░░
+  ░░░░░░░░░░
+  ░░░░░░░░░░
+  ░░░░░░░░░░
+  ░░░░░░░░░░
+  ░░░███░░░░
+  ░░░░░░░░░░
+  ░░░░░░░░░░`   // Angry (😡) - angry expression
+};
+
+// Unicode block faces (10x10)
+const ASCII_FACES_2 = {
+    1: `░░░░░░░░░░
+  ░░░░░░░░░░
+  ░░██░░██░░
+  ░░██░░██░░
+  ░░░░░░░░░░
+  ░░░░░░░░░░
+  ░░░████░░░
+  ░░░████░░░
+  ░░░░░░░░░░
+  ░░░░░░░░░░`,  // Very Happy (🤩) - big open smile
+  
+    2: `░░░░░░░░░░
+  ░░░░░░░░░░
+  ░░██░░██░░
+  ░░░░░░░░░░
+  ░░░░░░░░░░
+  ░░░░░░░░░░
+  ░░░████░░░
+  ░░░░░░░░░░
+  ░░░░░░░░░░
+  ░░░░░░░░░░`,  // Happy (😀) - smile
+  
+    3: `░░░░░░░░░░
+  ░░░░░░░░░░
+  ░░██░░██░░
+  ░░░░░░░░░░
+  ░░░░░░░░░░
+  ░░░░░░░░░░
+  ░░░░░░░░░░
+  ░░░████░░░
+  ░░░░░░░░░░
+  ░░░░░░░░░░`,  // Neutral (😐) - straight mouth
+  
+    4: `░░░░░░░░░░
+  ░░░░░░░░░░
+  ░░██░░██░░
+  ░░░░░░░░░░
+  ░░░░░░░░░░
+  ░░░░░░░░░░
+  ░░░░░░░░░░
+  ░░░░████░░
+  ░░░░░░░░░░
+  ░░░░░░░░░░`,  // Sad (🙁) - frown
+  
+    5: `░░░░░░░░░░
+  ░░██░░░░██░
+  ░░░░██░░░░░
+  ░░░░░░░░░░
+  ░░░░░░░░░░
+  ░░░░░░░░░░
+  ░░░░████░░
+  ░░░░████░░
+  ░░░░░░░░░░
+  ░░░░░░░░░░`   // Angry (😡) - angled brows + clenched mouth
+  };
+
 
 const MoodSelection = ({onLeftArrowRef, onRightArrowRef, onEnterRef}) => {
 
@@ -16,8 +197,6 @@ const MoodSelection = ({onLeftArrowRef, onRightArrowRef, onEnterRef}) => {
     const [moodInputVisable, setMoodInputVisable] = useState(false);
 
     const [inputOver, setInputOver] = useState(false);
-
-
 
     const [textInput, setTextInput] = useState("");
 
@@ -132,51 +311,91 @@ const MoodSelection = ({onLeftArrowRef, onRightArrowRef, onEnterRef}) => {
                             borderStyle="round" 
                             borderColor={selectButtonIndex === 1 ? "green" : "cyan"}
                             backgroundColor={selectButtonIndex === 1 ? "green" : undefined}
+                            minWidth={15}
+                            flexDirection="column"
+                            alignItems="center"
                         >
-                            <Box flexDirection="column" alignItems="center">
-                                <BigText text="1"/>
-                                <Text>🤩</Text>
-                            </Box>
+                            <BigText text="1"/>
+                            {/* <Text>🤩</Text> */}
+                            {/* <Text>🤩\uFE0F</Text>
+                            <Text>🤩\e#3😑\n\e#4😶\n</Text>
+                            <BigText text=":D"/> */}
+                            <BigText text=":D" font="tiny"/>
+                            {/* {ASCII_FACES[0]} */}
+                            {Face1}
+                            <Text>  ░░░░░░░░░░</Text>
+                            <Text>  ░░░░░░░░░░</Text>
+                            <Text>  ░░██░░██░░</Text>
+                            <Text>  ░░░░░░░░░░</Text>
+                            <Text>  ░░░░░░░░░░</Text>
+                            <Text>  ░░░░░░░░░░</Text>
+                            <Text>  ░░░███░░░░</Text>
+                            <Text>  ░░░░░░░░░░</Text>
+                            <Text>  ░░░░░░░░░░</Text>
+                            <Text>  ░░░░░░░░░░</Text>
                         </Box>
                         <Box 
                             borderStyle="round" 
                             borderColor={selectButtonIndex === 2 ? "green" : "cyan"}
                             backgroundColor={selectButtonIndex === 2 ? "green" : undefined}
-                        >
-                            <Box flexDirection="column" alignItems="center">
-                                <BigText text="2"/>
-                                <Text>😀</Text>
-                            </Box>
+                            minWidth={15}
+                            flexDirection="column"
+                            alignItems="center"
+                            >
+                            <BigText text="2" />
+                            {/* <Text>😀</Text> */}
+                            <BigText text=":D" font="tiny"/>
+                            {/* {ASCII_FACES[1]} */}
+                            <Text>  ░░░░░░░░░░</Text>
+                            <Text>  ░░░░░░░░░░</Text>
+                            <Text>  ░░██░░██░░</Text>
+                            <Text>  ░░░░░░░░░░</Text>
+                            <Text>  ░░█░░░░█░░</Text>
+                            <Text>  ░░█░░░░█░░</Text>
+                            <Text>  ░░░████░░░</Text>
+                            <Text>  ░░░░░░░░░░</Text>
+                            <Text>  ░░░░░░░░░░</Text>
+                            <Text>  ░░░░░░░░░░</Text>
+
                         </Box>
                         <Box 
                             borderStyle="round" 
                             borderColor={selectButtonIndex === 3 ? "green" : "cyan"}
                             backgroundColor={selectButtonIndex === 3 ? "green" : undefined}
+                            minWidth={15}
+                            flexDirection="column"
+                            alignItems="center"
                         >
-                            <Box flexDirection="column" alignItems="center">
-                                <BigText text="3"/>
-                                <Text>😐</Text>
-                            </Box>
+                            <BigText text="3" />
+                            {/* <Text>😐</Text> */}
+                            <BigText text=":|" font="tiny"/>
+                            {/* {ASCII_FACES[2]} */}
                         </Box>
                         <Box 
                             borderStyle="round" 
                             borderColor={selectButtonIndex === 4 ? "green" : "cyan"}
                             backgroundColor={selectButtonIndex === 4 ? "green" : undefined}
+                            minWidth={15}
+                            flexDirection="column"
+                            alignItems="center"
                         >
-                            <Box flexDirection="column" alignItems="center">
-                                <BigText text="4"/>
-                                <Text>🙁</Text>
-                            </Box>
+                            <BigText text="4" />
+                            {/* <Text>🙁</Text> */}
+                            <BigText text=":(" font="tiny"/>
+                            {/* {ASCII_FACES[3]} */}
                         </Box>
                         <Box 
                             borderStyle="round" 
                             borderColor={selectButtonIndex === 5 ? "green" : "cyan"}
                             backgroundColor={selectButtonIndex === 5 ? "green" : undefined}
+                            minWidth={15}
+                            flexDirection="column"
+                            alignItems="center"
                         >
-                            <Box flexDirection="column" alignItems="center">
-                                <BigText text="5"/>
-                                <Text>😡</Text>
-                            </Box>
+                            <BigText text="5" />
+                            {/* <Text>😡</Text> */}
+                            <BigText text=">:(" font="tiny"/>
+                            {/* {ASCII_FACES[4]} */}
                         </Box>
                     </Box>
                 </>
@@ -201,10 +420,13 @@ const MoodSelection = ({onLeftArrowRef, onRightArrowRef, onEnterRef}) => {
                 </>
             )}
             {moodSelected === true && moodInputVisable === true && inputOver === false && (
-                <TextInput
-                    value={textInput}
-                    onChange={setTextInput}
-                />
+                <>
+                    <TextInput
+                        value={textInput}
+                        onChange={setTextInput}
+                    />
+                    <BigText text={textInput} font="tiny"/>
+                </>
             )}
             {inputOver === true && <Text>Thank you have a good day</Text>}
             <Text> </Text>
