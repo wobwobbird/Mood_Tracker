@@ -1,0 +1,1 @@
+- ASCII TExt Website: https://patorjk.com/software/taag/#p=display&f=Big+Money-nw&t=MoodLogger&x=rainbow1&v=4&h=4&w=80&we=false
