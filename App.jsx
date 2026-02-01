@@ -5,6 +5,7 @@ import Logo from './logo';
 import { saveLogoColourIndex, getLogoColourIndexFromDb } from './database';
 import { borderColourSchemes } from './colourScheme';
 import BigText from 'ink-big-text';
+import results_screen from './results_screen';
 
 const App = () => {
 	const [dimensions, setDimensions] = useState({
@@ -27,7 +28,7 @@ const App = () => {
 
 	const {exit} = useApp();
 
-	const [seeResultsAnswer, setSeeResultsAnswer] = useState(false);
+	const [seeResultsAnswer, setSeeResultsAnswer] = useState(true);
 	
 	useInput((input, key) => {
 		if (input === 'q' || key.escape || (key.ctrl && input === 'c')) {
@@ -54,7 +55,8 @@ const App = () => {
 			}
 			if (currentScreen === "mood") handleMoodEnter.current();
 			if (currentScreen === "askToSeeResults") {
-
+				if (seeResultsAnswer === true) setCurrentScreen("results");
+				if (seeResultsAnswer === false) exit();
 			}
 		}
 	});
@@ -130,6 +132,9 @@ const App = () => {
 									</Box>
 									{/* <Text>YOOOO DANTE</Text> */}
 								</>
+							)}
+							{currentScreen === "results" && (
+								{render(<results_screen />)}
 							)}
 							<Text> </Text>
 							<Text> </Text>
