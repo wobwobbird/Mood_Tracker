@@ -42,3 +42,8 @@ export function saveLogoColourIndex(colourScheme) {
     const prep = db.prepare(`INSERT OR REPLACE INTO settings (key, value) VALUES (?, ?)`)
     prep.run("Colour", colourScheme);
 }
+
+export function getMoodEntriesFromDb() {
+    const results = db.prepare(`SELECT * FROM mood_board ORDER BY id DESC`);
+    return results.all();
+}

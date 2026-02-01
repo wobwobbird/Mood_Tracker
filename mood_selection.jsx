@@ -4,7 +4,7 @@ import { saveMoodEntry } from './database.js';
 import TextInput from "ink-text-input";
 import BigText from 'ink-big-text';
 
-const MoodSelection = ({onLeftArrowRef, onRightArrowRef, onEnterRef}) => {
+const MoodSelection = ({onLeftArrowRef, onRightArrowRef, onEnterRef, setCurrentScreen}) => {
 
     const [selectButtonIndex, setSelectButtonIndex] = useState(0);
 
@@ -51,7 +51,8 @@ const MoodSelection = ({onLeftArrowRef, onRightArrowRef, onEnterRef}) => {
                 if (writeNote === false) {
                     saveMoodEntry(selectButtonIndex, null);
                     setInputOver(true);
-                    exit();
+                    // exit();
+                    setCurrentScreen("askToSeeResults");
                 }
                 if (writeNote === true) {
                     if (moodInputVisable === false) {
@@ -60,7 +61,8 @@ const MoodSelection = ({onLeftArrowRef, onRightArrowRef, onEnterRef}) => {
                         if (textInput !== "") {
                             saveMoodEntry(selectButtonIndex, textInput);
                             setInputOver(true);
-                            exit();
+                            // exit();
+                            setCurrentScreen("askToSeeResults");
                         }
                     }
                 }

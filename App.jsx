@@ -26,6 +26,8 @@ const App = () => {
 	const SELECTABLE_ELEMENTS = ["logo", "none", "button"];
 
 	const {exit} = useApp();
+
+	const [seeResultsAnswer, setSeeResultsAnswer] = useState(false);
 	
 	useInput((input, key) => {
 		if (input === 'q' || key.escape || (key.ctrl && input === 'c')) {
@@ -35,10 +37,12 @@ const App = () => {
 		if (key.downArrow || key.rightArrow) {
 			if (currentScreen === "menu") setMenuSelectedIndex((menuSelectedIndex + 1) % SELECTABLE_ELEMENTS.length);
 			if (currentScreen === "mood") handleMoodLeftArrow.current();
+			if (currentScreen === "askToSeeResults") setSeeResultsAnswer(!seeResultsAnswer);
 		}
 		if (key.upArrow || key.leftArrow) {
 			if (currentScreen === "menu") setMenuSelectedIndex((menuSelectedIndex - 1 + SELECTABLE_ELEMENTS.length) % SELECTABLE_ELEMENTS.length);
 			if (currentScreen === "mood") handleMoodRightArrow.current();
+			if (currentScreen === "askToSeeResults") setSeeResultsAnswer(!seeResultsAnswer);
 		}
 		if (key.return) {
 			if (currentScreen === "menu") {
@@ -49,6 +53,9 @@ const App = () => {
 				}
 			}
 			if (currentScreen === "mood") handleMoodEnter.current();
+			if (currentScreen === "askToSeeResults") {
+
+			}
 		}
 	});
 
@@ -101,7 +108,28 @@ const App = () => {
 									onLeftArrowRef={handleMoodLeftArrow}
 									onRightArrowRef={handleMoodRightArrow}
 									onEnterRef={handleMoodEnter}
+									setCurrentScreen={setCurrentScreen}
 								/>
+							)}
+							{currentScreen === "askToSeeResults" && (
+								<>
+									<BigText text="See Results?" font="tiny"/>
+									<Box alignItems='row' gap="5" paddingx={2} paddingY={2}>
+										<Box
+											borderStyle="round" 
+											backgroundColor={seeResultsAnswer === true ? "green" : undefined}                        
+										>
+											<BigText text="Yes"/>
+										</Box>
+										<Box
+											borderStyle="round" 
+											backgroundColor={seeResultsAnswer === false ? "green" : undefined}     
+										>
+											<BigText text="No"/>
+										</Box>
+									</Box>
+									{/* <Text>YOOOO DANTE</Text> */}
+								</>
 							)}
 							<Text> </Text>
 							<Text> </Text>
