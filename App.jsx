@@ -5,7 +5,7 @@ import Logo from './logo';
 import { saveLogoColourIndex, getLogoColourIndexFromDb } from './database';
 import { borderColourSchemes } from './colourScheme';
 import BigText from 'ink-big-text';
-import results_screen from './results_screen';
+// import results_screen from './results_screen';
 
 const App = () => {
 	const [dimensions, setDimensions] = useState({
@@ -133,9 +133,9 @@ const App = () => {
 									{/* <Text>YOOOO DANTE</Text> */}
 								</>
 							)}
-							{currentScreen === "results" && (
+							{/* {currentScreen === "results" && (
 								{render(<results_screen />)}
-							)}
+							)} */}
 							<Text> </Text>
 							<Text> </Text>
 							<Text color="gray" alignSelf="center" >Press 'q' or ESC to quit</Text>	
