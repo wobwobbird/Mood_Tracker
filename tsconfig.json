@@ -1,0 +1,23 @@
+{
+    "compilerOptions": {
+      "target": "ES2022",
+      "module": "ESNext",
+      "moduleResolution": "node",
+      "jsx": "react-jsx",
+      "esModuleInterop": true,
+      "skipLibCheck": true,
+      "allowSyntheticDefaultImports": true,
+      "allowJs": true
+    },
+    "include": ["**/*.js", "**/*.jsx"],
+    "exclude": ["node_modules"],
+    "tsx": {
+        "esbuildOptions": {
+          "format": "esm",
+          "platform": "node",
+          "target": "es2022",
+          "bundle": false,
+          "packages": "external"
+        }
+    }
+ }
