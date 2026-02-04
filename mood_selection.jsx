@@ -133,26 +133,32 @@ const MoodSelection = ({onLeftArrowRef, onRightArrowRef, onEnterRef, setCurrentS
             <Text> ████ </Text>
             <Text>█    █</Text>
             <Text>    </Text>
-            <Text>    </Text>
         </>
     );
 
 	return (
         // <Box flexDirection="column" width="100%" height="100%" alignItems='center' > 
-        <Box flexDirection="column" alignItems='center' > 
-            <Text> </Text>
-            <Text> </Text>
-
+        <Box 
+            flexDirection="column"
+            alignItems='center'
+            justifyContent='center'
+            flexGrow={1}
+        > 
             {moodSelected === false && (
-                <>
+                <Box 
+                    flexDirection="column"
+                    alignItems="center"
+                    flexGrow={1}
+                    justifyContent='center'
+                >
                     <BigText text="Record how you are feeling now" font="tiny"/>
-                    <Text> </Text>
-                    <Box alignItems='row' gap="10">
+                    <Box alignItems='row' gap="10" >
                         <Box 
                             borderStyle="round" 
                             borderColor={selectButtonIndex === 1 ? "green" : "cyan"}
                             backgroundColor={selectButtonIndex === 1 ? "green" : undefined}
                             minWidth={15}
+                            height={17}
                             flexDirection="column"
                             alignItems="center"
                         >
@@ -164,6 +170,7 @@ const MoodSelection = ({onLeftArrowRef, onRightArrowRef, onEnterRef, setCurrentS
                             borderColor={selectButtonIndex === 2 ? "green" : "cyan"}
                             backgroundColor={selectButtonIndex === 2 ? "green" : undefined}
                             minWidth={15}
+                            height={17}
                             flexDirection="column"
                             alignItems="center"
                             >
@@ -176,6 +183,7 @@ const MoodSelection = ({onLeftArrowRef, onRightArrowRef, onEnterRef, setCurrentS
                             borderColor={selectButtonIndex === 3 ? "green" : "cyan"}
                             backgroundColor={selectButtonIndex === 3 ? "green" : undefined}
                             minWidth={15}
+                            height={17}
                             flexDirection="column"
                             alignItems="center"
                         >
@@ -187,6 +195,7 @@ const MoodSelection = ({onLeftArrowRef, onRightArrowRef, onEnterRef, setCurrentS
                             borderColor={selectButtonIndex === 4 ? "green" : "cyan"}
                             backgroundColor={selectButtonIndex === 4 ? "green" : undefined}
                             minWidth={15}
+                            height={17}
                             flexDirection="column"
                             alignItems="center"
                         >
@@ -198,6 +207,7 @@ const MoodSelection = ({onLeftArrowRef, onRightArrowRef, onEnterRef, setCurrentS
                             borderColor={selectButtonIndex === 5 ? "green" : "cyan"}
                             backgroundColor={selectButtonIndex === 5 ? "green" : undefined}
                             minWidth={15}
+                            height={17}
                             flexDirection="column"
                             alignItems="center"
                         >
@@ -205,10 +215,15 @@ const MoodSelection = ({onLeftArrowRef, onRightArrowRef, onEnterRef, setCurrentS
                             <Face5 />
                         </Box>
                     </Box>
-                </>
+                </Box>
             )}
             {moodSelected === true && moodInputVisable === false && inputOver === false && (
-                <>
+                <Box 
+                    flexDirection="column"
+                    alignItems="center"
+                    flexGrow={1}
+                    justifyContent='center'
+                >
                     <BigText text="Leave a note?" font="tiny"/>
                     <Box alignItems='row' gap="5" paddingx={2} paddingY={2}>
                         <Box
@@ -224,34 +239,29 @@ const MoodSelection = ({onLeftArrowRef, onRightArrowRef, onEnterRef, setCurrentS
                             <BigText text="No"/>
                         </Box>
                     </Box>
-                </>
+                </Box>
             )}
             {moodSelected === true && moodInputVisable === true && inputOver === false && (
-                <>
+                <Box 
+                    flexDirection="column"
+                    alignItems="center"
+                    width="100%"
+                    flexGrow={1}
+                    justifyContent='space-around'
+                >
                     <TextInput
                         value={textInput}
                         onChange={setTextInput}
                     />
                     <BigText text={textInput} font="tiny"/>
-                </>
+                </Box>
             )}
             {inputOver === true && <Text>Thank you have a good day</Text>}
-            <Text> </Text>
         </Box>
 	);
 };
 
 export default MoodSelection;
-
-
-
-
-
-
-
-
-
-
 
             {/* {moodSelected === false && (
                 <>

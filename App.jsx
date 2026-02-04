@@ -24,32 +24,21 @@ const App = () => {
 	const handleMoodRightArrow = useRef(() => {});
 	const handleMoodEnter = useRef(() => {});
 
-	const SELECTABLE_ELEMENTS = ["logo", "none", "button"];
+	const SELECTABLE_ELEMENTS = ["logo", "none", "record", "results"];
 
 	const {exit} = useApp();
 
 	const [seeResultsAnswer, setSeeResultsAnswer] = useState(true);
 
-	const MIN_WIDTH = 150;
-	const MIN_HEIGHT = 50;
-	let isTerminalTooSmall;
-	let showBorder;
-	const MIN_WIDTH_BORDER = MIN_WIDTH + 10;
-	const MIN_HEIGHT_BORDER = MIN_HEIGHT + 10;
+	const MIN_WIDTH = 150 + 10;
+	const MIN_HEIGHT = 50 + 13;
+	const [isTerminalTooSmall, setIsTerminalTooSmall] = useState(true);
 
 	useEffect(() => {
 		if (dimensions.height >= MIN_HEIGHT && dimensions.width >= MIN_WIDTH) {
-			isTerminalTooSmall = false;
+			setIsTerminalTooSmall(false);
 		} else {
-			isTerminalTooSmall = true;
-		}
-	}, [dimensions.height, dimensions.width]);
-
-	useEffect(() => {
-		if (dimensions.height >= MIN_HEIGHT_BORDER && dimensions.width >= MIN_WIDTH_BORDER) {
-			showBorder = false;
-		} else {
-			showBorder = true;
+			setIsTerminalTooSmall(true);
 		}
 	}, [dimensions.height, dimensions.width]);
 	
@@ -75,6 +64,7 @@ const App = () => {
 					saveLogoColourIndex(logoColourIndex);
 					setCurrentScreen("mood");
 				}
+				if (menuSelectedIndex === 3) setCurrentScreen("results")
 			}
 			if (currentScreen === "mood") handleMoodEnter.current();
 			if (currentScreen === "askToSeeResults") {
@@ -106,30 +96,80 @@ const App = () => {
 		};
 	}, []);
 
-	const border = () => {
+	const Border = ({ children }) => {
 		return (
 			isTerminalTooSmall ? (
 				<Box
 					borderStyle="round"
 					borderColor="red"
 					width={dimensions.width}
-					height={dimensions.height}		
+					height={dimensions.height}	
+					flexDirection="column"
+					alignItems="center"
+					justifyContent="center"
+					gap="1"
 				>
+					{dimensions.width <= MIN_WIDTH ? (
+						<Text >The width is {dimensions.width}, increase by {MIN_WIDTH - dimensions.width} to begin</Text>
+					) : (
+						<Text >The width is enough</Text>
+					)}
+					{dimensions.height <= MIN_HEIGHT ? (
+						<Text >The height is {dimensions.height}, increase by {MIN_HEIGHT - dimensions.height} to begin</Text>
+					) : (
+						<Text >The height is enough</Text>
+					)}
 					
-	
 				</Box>
 			) : (
 				<Box
-					borderStyle={showBorder ? "round" : undefined}
+					borderStyle="round"
 					borderColor={borderColourSchemes[logoColourIndex][0]}
 					width={dimensions.width}
-					height={dimensions.height}		
+					height={dimensions.height}
 				>
-					<Box borderStyle={showBorder ? "round" : undefined} borderColor={borderColourSchemes[logoColourIndex][1]}> 	
-						<Box borderStyle={showBorder ? "round" : undefined} borderColor={borderColourSchemes[logoColourIndex][2]}> 	
-							<Box borderStyle={showBorder ? "round" : undefined} borderColor={borderColourSchemes[logoColourIndex][3]}> 	
-								{/* <Box flexDirection="column" width="100%" height="100%" alignItems='center' justifyContent='center'>
-								</Box> */}
+					<Box 
+						borderStyle="round"
+						borderColor={borderColourSchemes[logoColourIndex][1]}
+						width="100%"
+						height="100%"
+					> 	
+						<Box 
+							borderStyle="round"
+							borderColor={borderColourSchemes[logoColourIndex][2]}
+							width="100%"
+							height="100%"
+						> 	
+							<Box 
+								borderStyle="round"
+								borderColor={borderColourSchemes[logoColourIndex][3]}
+								width="100%"
+								height="100%"
+								alignItems='center'
+								justifyContent='space-between'
+								flexDirection="column"
+							> 	
+								<Box
+									flexDirection="column" 
+									gap={1}
+									alignItems='center' 
+									justifyContent='center'
+									height="100%"
+								>
+									<Box 
+										borderStyle="classic" 
+										borderColor="red" 
+										flexDirection="column" 
+										width={MIN_WIDTH - 10} 
+										height={MIN_HEIGHT - 13} 
+										alignItems='center' 
+										justifyContent='center'
+									>
+										{children}
+									</Box>
+								</Box>
+								{/* <Box flexDirection="column" width="100%" height="100%" alignItems='center' justifyContent='center'> */}
+								<Text color="gray" alignSelf="center" >Press 'q' or ESC to quit</Text>	
 							</Box>
 						</Box>
 					</Box>
@@ -138,73 +178,122 @@ const App = () => {
 		)
 	}
 
-	return (
-		{border}
-		// <Box
-		// 	borderStyle={dimensions.height > 30 ? "round" : undefined}
-		// 	borderColor={borderColourSchemes[logoColourIndex][0]}
-		// 	width={dimensions.width}
-		// 	height={dimensions.height}
-		// > 
-		// 	<Box borderStyle={dimensions.height > 30 ? "round" : undefined} borderColor={borderColourSchemes[logoColourIndex][1]}> 	
-		// 		<Box borderStyle={dimensions.height > 30 ? "round" : undefined} borderColor={borderColourSchemes[logoColourIndex][2]}> 	
-		// 			<Box borderStyle={dimensions.height > 30 ? "round" : undefined} borderColor={borderColourSchemes[logoColourIndex][3]}> 	
-		// 				<Box flexDirection="column" width="100%" height="100%" alignItems='center' justifyContent='center'>
-		// 					<Text> </Text>
-		// 					<Box borderStyle="double" padding={1} borderColor={menuSelectedIndex === 0 ? "white" : "black"}>
-		// 						{<Logo onColourChangeRef={handleLogoColourChange} logoColourIndex={logoColourIndex} setLogoColourIndex={setLogoColourIndex} />}
-		// 					</Box>
-		// 					<Text> </Text>
-		// 					{currentScreen === "menu" && (
-		// 						<Box borderStyle="round" borderColor={menuSelectedIndex === 2 ? "green" : "cyan"} backgroundColor={menuSelectedIndex === 2 ? "green" : undefined}>
-		// 							{/* <Text color="white">  Press [enter] To Start  </Text> */}
-		// 							<BigText text="Press [enter] To Start" font="tiny" />
-		// 						</Box>
-		// 					)}
-		// 					{currentScreen === "mood" && (
-		// 						<MoodSelection
-		// 							onLeftArrowRef={handleMoodLeftArrow}
-		// 							onRightArrowRef={handleMoodRightArrow}
-		// 							onEnterRef={handleMoodEnter}
-		// 							setCurrentScreen={setCurrentScreen}
-		// 						/>
-		// 					)}
-		// 					{currentScreen === "askToSeeResults" && (
-		// 						<>
-		// 							<BigText text="See Results?" font="tiny"/>
-		// 							<Box alignItems='row' gap="5" paddingx={2} paddingY={2}>
-		// 								<Box
-		// 									borderStyle="round" 
-		// 									backgroundColor={seeResultsAnswer === true ? "green" : undefined}                        
-		// 								>
-		// 									<BigText text="Yes"/>
-		// 								</Box>
-		// 								<Box
-		// 									borderStyle="round" 
-		// 									backgroundColor={seeResultsAnswer === false ? "green" : undefined}     
-		// 								>
-		// 									<BigText text="No"/>
-		// 								</Box>
-		// 							</Box>
-		// 							{/* <Text>YOOOO DANTE</Text> */}
-		// 						</>
-		// 					)}
-		// 					{currentScreen === "results" && (
-		// 						<>
-		// 							<Box>
-		// 								<ResultsScreen/>
+	const AppLogicRecord = () => {
+		return (
+			<Box flexDirection="column" width="100%" height="100%" alignItems='center' justifyContent='center'>
+				<Box borderStyle="double" padding={1} marginTop={2} borderColor={menuSelectedIndex === 0 ? "white" : "black"}>
+					{<Logo onColourChangeRef={handleLogoColourChange} logoColourIndex={logoColourIndex} setLogoColourIndex={setLogoColourIndex} />}
+				</Box>
+				<Box flexDirection="column" width="100%" flexGrow={1} alignItems='center' justifyContent='center'>
+					{currentScreen === "menu" && (
+						<>
+							<Box 
+								borderStyle="round"
+								borderColor={menuSelectedIndex === 2 ? "green" : "cyan"} 
+								backgroundColor={menuSelectedIndex === 2 ? "green" : undefined}
+								onMouseEnter={() => setMenuSelectedIndex(2)}
+								onMouseLeave={() => setMenuSelectedIndex(0)}
+								width={50}
+								justifyContent='center'
+							>
+								{/* <Text color="white">  Press [enter] To Start  </Text> */}
+								<BigText text="Record Mood" font="tiny" />
+							</Box>
+							<Box 
+								borderStyle="round" 
+								borderColor={menuSelectedIndex === 3 ? "green" : "cyan"} 
+								backgroundColor={menuSelectedIndex === 3 ? "green" : undefined}
+								onMouseEnter={() => setMenuSelectedIndex(3)}
+								onMouseLeave={() => setMenuSelectedIndex(0)}
+								width={50}
+								justifyContent='center'
+							>
+								{/* <Text color="white">  Press [enter] To Start  </Text> */}
+								<BigText text="See Results" font="tiny" />
+							</Box>
+						</>
+					)}
+					{currentScreen === "mood" && (
+						<MoodSelection
+							onLeftArrowRef={handleMoodLeftArrow}
+							onRightArrowRef={handleMoodRightArrow}
+							onEnterRef={handleMoodEnter}
+							setCurrentScreen={setCurrentScreen}
+						/>
+					)}
+					{currentScreen === "askToSeeResults" && (
+						<>
+							<BigText text="See Results?" font="tiny"/>
+							<Box alignItems='row' gap="5" paddingx={2} paddingY={2}>
+								<Box
+									borderStyle="round" 
+									backgroundColor={seeResultsAnswer === true ? "green" : undefined}                        
+								>
+									<BigText text="Yes"/>
+								</Box>
+								<Box
+									borderStyle="round" 
+									backgroundColor={seeResultsAnswer === false ? "green" : undefined}     
+								>
+									<BigText text="No"/>
+								</Box>
+							</Box>
+							{/* <Text>YOOOO DANTE</Text> */}
+						</>
+					)}
+				</Box>
+			</Box>
+		)
+	}
 
-		// 							</Box>
-		// 						</>
-		// 					)}
-		// 					<Text> </Text>
-		// 					<Text> </Text>
-		// 					<Text color="gray" alignSelf="center" >Press 'q' or ESC to quit</Text>	
-		// 				</Box>
-		// 			</Box>
-		// 		</Box>
-		// 	</Box>
-		// </Box>
+	const AppLogicResults = () => {
+		return (
+			<Box flexDirection="column" width="100%" height="100%" alignItems='center' justifyContent='center' >
+				<Box
+					flexDirection='row'
+					height={25}
+					width="100%"
+					margin={1}
+					backgroundColor="pinkBright"
+				>
+					<Box
+						borderColor="green"
+						borderStyle="double"
+						flexGrow={1}
+					>
+					</Box>
+					<Box
+						borderColor="green"
+						borderStyle="double"
+						flexGrow={1}
+					>
+					</Box>
+					<Box
+						borderColor="green"
+						borderStyle="double"
+						flexGrow={1}
+					>
+					</Box>
+					<Box
+						borderColor="green"
+						borderStyle="double"
+						flexGrow={1}
+					>
+					</Box>
+				</Box>
+				<ResultsScreen/>
+			</Box>
+		)
+	}
+
+	return (
+		<Border>
+			{currentScreen !== "results" ? (
+				<AppLogicRecord/>
+			) : (
+				<AppLogicResults/>
+			)}
+		</Border>
 	);
 };
 
