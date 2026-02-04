@@ -7,3 +7,5 @@ export default ResultsScreen = () => {
     const data = getMoodEntriesFromDb();
     return <Table data={data} columns={['mood_value', 'timestamp', 'notes']} />
 };
+
+ResultsScreen();

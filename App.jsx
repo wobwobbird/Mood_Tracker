@@ -5,7 +5,7 @@ import Logo from './logo';
 import { saveLogoColourIndex, getLogoColourIndexFromDb } from './database';
 import { borderColourSchemes } from './colourScheme';
 import BigText from 'ink-big-text';
-import results_screen from './results_screen';
+import ResultsScreen from './results_screen';
 
 const App = () => {
 	const [dimensions, setDimensions] = useState({
@@ -134,7 +134,7 @@ const App = () => {
 								</>
 							)}
 							{currentScreen === "results" && (
-								// <results_screen/>
+								<ResultsScreen/>
 							)}
 							<Text> </Text>
 							<Text> </Text>
