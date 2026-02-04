@@ -3,7 +3,6 @@
     "better-sqlite3": "^12.6.2",
     "ink": "^6.6.0",
     "ink-big-text": "^2.0.0",
-    "ink-table": "^3.1.0",
     "ink-text-input": "^6.0.0",
     "react": "^19.2.3"
   },
@@ -13,8 +12,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "tsx index.js",
-    "results": "tsx results_screen.jsx"
+    "start": "tsx index.js"
   },
   "keywords": [],
   "author": "",
