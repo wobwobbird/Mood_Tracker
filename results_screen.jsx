@@ -17,9 +17,9 @@ const ResultsScreen = () => {
     }));
     
     return (
-        <Box flexDirection="column" padding={1}>
+        <Box flexDirection="column" padding={1} height={20}>
             <Text color="green" bold>Mood History</Text>
-            <Text>{"─".repeat(50)}</Text>
+            <Text>{"─".repeat(140)}</Text>
             <Box flexDirection="row" marginBottom={1}>
                 <Box width={15}>
                     <Text color="green" bold>Mood</Text>
@@ -27,11 +27,11 @@ const ResultsScreen = () => {
                 <Box width={25}>
                     <Text color="green" bold>Timestamp</Text>
                 </Box>
-                <Box width={30}>
+                <Box width={100}>
                     <Text color="green" bold>Notes</Text>
                 </Box>
             </Box>
-            <Text>{"─".repeat(50)}</Text>
+            <Text>{"─".repeat(140)}</Text>
             {data.map((entry, index) => (
                 <Box key={index} flexDirection="row" marginBottom={0}>
                     <Box width={15}>
@@ -40,7 +40,7 @@ const ResultsScreen = () => {
                     <Box width={25}>
                         <Text>{entry.timestamp}</Text>
                     </Box>
-                    <Box width={30}>
+                    <Box width={100}>
                         <Text>{entry.notes}</Text>
                     </Box>
                 </Box>

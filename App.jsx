@@ -252,6 +252,9 @@ const App = () => {
 				<Box
 					flexDirection='row'
 					height={25}
+					minHeight={25}
+					maxHeight={25}
+					flexShrink={0}				
 					width="100%"
 					margin={1}
 					backgroundColor="pinkBright"
@@ -260,24 +263,28 @@ const App = () => {
 						borderColor="green"
 						borderStyle="double"
 						flexGrow={1}
+						maxHeight={25}
 					>
 					</Box>
 					<Box
 						borderColor="green"
 						borderStyle="double"
 						flexGrow={1}
+						maxHeight={25}
 					>
 					</Box>
 					<Box
 						borderColor="green"
 						borderStyle="double"
 						flexGrow={1}
+						maxHeight={25}
 					>
 					</Box>
 					<Box
 						borderColor="green"
 						borderStyle="double"
 						flexGrow={1}
+						maxHeight={25}
 					>
 					</Box>
 				</Box>
