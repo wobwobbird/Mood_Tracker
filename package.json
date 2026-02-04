@@ -13,7 +13,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "tsx index.js"
+    "start": "tsx index.js",
+    "results": "tsx results_screen.jsx"
   },
   "keywords": [],
   "author": "",
