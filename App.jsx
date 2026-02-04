@@ -29,6 +29,29 @@ const App = () => {
 	const {exit} = useApp();
 
 	const [seeResultsAnswer, setSeeResultsAnswer] = useState(true);
+
+	const MIN_WIDTH = 150;
+	const MIN_HEIGHT = 50;
+	let isTerminalTooSmall;
+	let showBorder;
+	const MIN_WIDTH_BORDER = MIN_WIDTH + 10;
+	const MIN_HEIGHT_BORDER = MIN_HEIGHT + 10;
+
+	useEffect(() => {
+		if (dimensions.height >= MIN_HEIGHT && dimensions.width >= MIN_WIDTH) {
+			isTerminalTooSmall = false;
+		} else {
+			isTerminalTooSmall = true;
+		}
+	}, [dimensions.height, dimensions.width]);
+
+	useEffect(() => {
+		if (dimensions.height >= MIN_HEIGHT_BORDER && dimensions.width >= MIN_WIDTH_BORDER) {
+			showBorder = false;
+		} else {
+			showBorder = true;
+		}
+	}, [dimensions.height, dimensions.width]);
 	
 	useInput((input, key) => {
 		if (input === 'q' || key.escape || (key.ctrl && input === 'c')) {
@@ -83,67 +106,105 @@ const App = () => {
 		};
 	}, []);
 
-	return (
-		<Box
-			borderStyle={dimensions.height > 30 ? "round" : undefined}
-			borderColor={borderColourSchemes[logoColourIndex][0]}
-			width={dimensions.width}
-			height={dimensions.height}
-		> 
-			<Box borderStyle={dimensions.height > 30 ? "round" : undefined} borderColor={borderColourSchemes[logoColourIndex][1]}> 	
-				<Box borderStyle={dimensions.height > 30 ? "round" : undefined} borderColor={borderColourSchemes[logoColourIndex][2]}> 	
-					<Box borderStyle={dimensions.height > 30 ? "round" : undefined} borderColor={borderColourSchemes[logoColourIndex][3]}> 	
-						<Box flexDirection="column" width="100%" height="100%" alignItems='center' justifyContent='center'>
-							<Text> </Text>
-							<Box borderStyle="double" padding={1} borderColor={menuSelectedIndex === 0 ? "white" : "black"}>
-								{<Logo onColourChangeRef={handleLogoColourChange} logoColourIndex={logoColourIndex} setLogoColourIndex={setLogoColourIndex} />}
+	const border = () => {
+		return (
+			isTerminalTooSmall ? (
+				<Box
+					borderStyle="round"
+					borderColor="red"
+					width={dimensions.width}
+					height={dimensions.height}		
+				>
+					
+	
+				</Box>
+			) : (
+				<Box
+					borderStyle={showBorder ? "round" : undefined}
+					borderColor={borderColourSchemes[logoColourIndex][0]}
+					width={dimensions.width}
+					height={dimensions.height}		
+				>
+					<Box borderStyle={showBorder ? "round" : undefined} borderColor={borderColourSchemes[logoColourIndex][1]}> 	
+						<Box borderStyle={showBorder ? "round" : undefined} borderColor={borderColourSchemes[logoColourIndex][2]}> 	
+							<Box borderStyle={showBorder ? "round" : undefined} borderColor={borderColourSchemes[logoColourIndex][3]}> 	
+								{/* <Box flexDirection="column" width="100%" height="100%" alignItems='center' justifyContent='center'>
+								</Box> */}
 							</Box>
-							<Text> </Text>
-							{currentScreen === "menu" && (
-								<Box borderStyle="round" borderColor={menuSelectedIndex === 2 ? "green" : "cyan"} backgroundColor={menuSelectedIndex === 2 ? "green" : undefined}>
-									{/* <Text color="white">  Press [enter] To Start  </Text> */}
-									<BigText text="Press [enter] To Start" font="tiny" />
-								</Box>
-							)}
-							{currentScreen === "mood" && (
-								<MoodSelection
-									onLeftArrowRef={handleMoodLeftArrow}
-									onRightArrowRef={handleMoodRightArrow}
-									onEnterRef={handleMoodEnter}
-									setCurrentScreen={setCurrentScreen}
-								/>
-							)}
-							{currentScreen === "askToSeeResults" && (
-								<>
-									<BigText text="See Results?" font="tiny"/>
-									<Box alignItems='row' gap="5" paddingx={2} paddingY={2}>
-										<Box
-											borderStyle="round" 
-											backgroundColor={seeResultsAnswer === true ? "green" : undefined}                        
-										>
-											<BigText text="Yes"/>
-										</Box>
-										<Box
-											borderStyle="round" 
-											backgroundColor={seeResultsAnswer === false ? "green" : undefined}     
-										>
-											<BigText text="No"/>
-										</Box>
-									</Box>
-									{/* <Text>YOOOO DANTE</Text> */}
-								</>
-							)}
-							{currentScreen === "results" && (
-								<ResultsScreen/>
-							)}
-							<Text> </Text>
-							<Text> </Text>
-							<Text color="gray" alignSelf="center" >Press 'q' or ESC to quit</Text>	
 						</Box>
 					</Box>
 				</Box>
-			</Box>
-		</Box>
+			)
+		)
+	}
+
+	return (
+		{border}
+		// <Box
+		// 	borderStyle={dimensions.height > 30 ? "round" : undefined}
+		// 	borderColor={borderColourSchemes[logoColourIndex][0]}
+		// 	width={dimensions.width}
+		// 	height={dimensions.height}
+		// > 
+		// 	<Box borderStyle={dimensions.height > 30 ? "round" : undefined} borderColor={borderColourSchemes[logoColourIndex][1]}> 	
+		// 		<Box borderStyle={dimensions.height > 30 ? "round" : undefined} borderColor={borderColourSchemes[logoColourIndex][2]}> 	
+		// 			<Box borderStyle={dimensions.height > 30 ? "round" : undefined} borderColor={borderColourSchemes[logoColourIndex][3]}> 	
+		// 				<Box flexDirection="column" width="100%" height="100%" alignItems='center' justifyContent='center'>
+		// 					<Text> </Text>
+		// 					<Box borderStyle="double" padding={1} borderColor={menuSelectedIndex === 0 ? "white" : "black"}>
+		// 						{<Logo onColourChangeRef={handleLogoColourChange} logoColourIndex={logoColourIndex} setLogoColourIndex={setLogoColourIndex} />}
+		// 					</Box>
+		// 					<Text> </Text>
+		// 					{currentScreen === "menu" && (
+		// 						<Box borderStyle="round" borderColor={menuSelectedIndex === 2 ? "green" : "cyan"} backgroundColor={menuSelectedIndex === 2 ? "green" : undefined}>
+		// 							{/* <Text color="white">  Press [enter] To Start  </Text> */}
+		// 							<BigText text="Press [enter] To Start" font="tiny" />
+		// 						</Box>
+		// 					)}
+		// 					{currentScreen === "mood" && (
+		// 						<MoodSelection
+		// 							onLeftArrowRef={handleMoodLeftArrow}
+		// 							onRightArrowRef={handleMoodRightArrow}
+		// 							onEnterRef={handleMoodEnter}
+		// 							setCurrentScreen={setCurrentScreen}
+		// 						/>
+		// 					)}
+		// 					{currentScreen === "askToSeeResults" && (
+		// 						<>
+		// 							<BigText text="See Results?" font="tiny"/>
+		// 							<Box alignItems='row' gap="5" paddingx={2} paddingY={2}>
+		// 								<Box
+		// 									borderStyle="round" 
+		// 									backgroundColor={seeResultsAnswer === true ? "green" : undefined}                        
+		// 								>
+		// 									<BigText text="Yes"/>
+		// 								</Box>
+		// 								<Box
+		// 									borderStyle="round" 
+		// 									backgroundColor={seeResultsAnswer === false ? "green" : undefined}     
+		// 								>
+		// 									<BigText text="No"/>
+		// 								</Box>
+		// 							</Box>
+		// 							{/* <Text>YOOOO DANTE</Text> */}
+		// 						</>
+		// 					)}
+		// 					{currentScreen === "results" && (
+		// 						<>
+		// 							<Box>
+		// 								<ResultsScreen/>
+
+		// 							</Box>
+		// 						</>
+		// 					)}
+		// 					<Text> </Text>
+		// 					<Text> </Text>
+		// 					<Text color="gray" alignSelf="center" >Press 'q' or ESC to quit</Text>	
+		// 				</Box>
+		// 			</Box>
+		// 		</Box>
+		// 	</Box>
+		// </Box>
 	);
 };
 
