@@ -29,6 +29,7 @@ const App = () => {
 	const {exit} = useApp();
 
 	const [seeResultsAnswer, setSeeResultsAnswer] = useState(true);
+	const [showGoodbyeText, setShowGoodbyeText] = useState(false);
 
 	const MIN_WIDTH = 150 + 10;
 	const MIN_HEIGHT = 50 + 13;
@@ -69,7 +70,12 @@ const App = () => {
 			if (currentScreen === "mood") handleMoodEnter.current();
 			if (currentScreen === "askToSeeResults") {
 				if (seeResultsAnswer === true) setCurrentScreen("results");
-				if (seeResultsAnswer === false) exit();
+				if (seeResultsAnswer === false && showGoodbyeText === false) { 
+					setShowGoodbyeText(true);
+				}
+				if (seeResultsAnswer === false && showGoodbyeText === true) { 
+					exit();
+				}
 			}
 		}
 	});
@@ -221,7 +227,7 @@ const App = () => {
 							setCurrentScreen={setCurrentScreen}
 						/>
 					)}
-					{currentScreen === "askToSeeResults" && (
+					{currentScreen === "askToSeeResults" && showGoodbyeText === false && (
 						<>
 							<BigText text="See Results?" font="tiny"/>
 							<Box alignItems='row' gap="5" paddingx={2} paddingY={2}>
@@ -241,6 +247,9 @@ const App = () => {
 							{/* <Text>YOOOO DANTE</Text> */}
 						</>
 					)}
+					{currentScreen === "askToSeeResults" && showGoodbyeText === true && (
+						<BigText text="Good Bye" lineHeight={3}/>
+					)}
 				</Box>
 			</Box>
 		)
@@ -248,7 +257,7 @@ const App = () => {
 
 	const AppLogicResults = () => {
 		return (
-			<Box flexDirection="column" width="100%" height="100%" backgroundColor="red">
+			<Box flexDirection="column" width="100%" height="100%" >
 				<Box
 					flexDirection='row'
 					height={8}
@@ -264,30 +273,74 @@ const App = () => {
 						borderStyle="double"
 						flexGrow={1}
 						maxHeight={25}
-					>
+						alignItems='center'
+						justifyContent='center'
+						>
+						<Text>See All Records</Text>
 					</Box>
 					<Box
 						borderColor="green"
 						borderStyle="double"
 						flexGrow={1}
 						maxHeight={25}
+						alignItems='center'
+						justifyContent='center'
 					>
+						<Text>Show by day</Text>
 					</Box>
 					<Box
 						borderColor="green"
 						borderStyle="double"
 						flexGrow={1}
 						maxHeight={25}
+						alignItems='center'
+						justifyContent='center'
 					>
-					</Box>
-					<Box
-						borderColor="green"
-						borderStyle="double"
-						flexGrow={1}
-						maxHeight={25}
-					>
+						<Text>Graph</Text>
 					</Box>
 				</Box>
+
+
+				<Box
+					flexDirection='row'
+
+					flexShrink={0}				
+					backgroundColor="pinkBright"
+					paddingX={3}
+					marginBottom={1}
+					gap={2}
+					width="50%"
+				>
+					<Box
+						borderColor="green"
+						borderStyle="double"
+						flexGrow={1}
+						alignItems='center'
+						justifyContent='center'
+						>
+						<Text>Next</Text>
+					</Box>
+					<Box
+						borderColor="green"
+						borderStyle="double"
+						flexGrow={1}
+						alignItems='center'
+						justifyContent='center'
+					>
+						<Text>Prev</Text>
+					</Box>
+					<Box
+						borderColor="green"
+						borderStyle="double"
+						flexGrow={1}
+						alignItems='center'
+						justifyContent='center'
+					>
+						<Text>Back</Text>
+					</Box>
+				</Box>
+
+
 				<Box
 					width="100%"
 					backgroundColor="blue"

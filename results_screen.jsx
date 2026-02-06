@@ -21,7 +21,7 @@ const ResultsScreen = () => {
     });
     
     return (
-        <Box flexDirection="column" padding={1} height={20}>
+        <Box flexDirection="column" padding={1} flexGrow={1}>
             <Text color="green" bold>Mood History</Text>
             <Text>{"─".repeat(140)}</Text>
             <Box flexDirection="row" marginBottom={1}>
