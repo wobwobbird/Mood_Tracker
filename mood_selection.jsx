@@ -75,61 +75,56 @@ const MoodSelection = ({onLeftArrowRef, onRightArrowRef, onEnterRef, setCurrentS
 
     const Face1 = () => (
         <>
-            <Text>    </Text>
+            <Text> </Text>
             <Text>██  ██</Text>
             <Text>    </Text>
             <Text>██████</Text>
             <Text>█    █</Text>
             <Text> ████ </Text>
-            <Text>    </Text>
         </>
     );
     const Face2 = () => (
         <>
-            <Text>    </Text>
+            <Text> </Text>
             <Text>██  ██</Text>
             <Text>    </Text>
             <Text>█    █</Text>
             <Text>█    █</Text>
             <Text> ████ </Text>
-            <Text>    </Text>
         </>
     );
     
     const Face3 = () => (
         <>
-            <Text>    </Text>
+            <Text> </Text>
             <Text>██  ██</Text>
             <Text>    </Text>
             <Text>    </Text>
             <Text>██████</Text>
-            <Text>    </Text>
             <Text>    </Text>
         </>
     );
     
     const Face4 = () => (
         <>
-            <Text>    </Text>
+            <Text> </Text>
             <Text>██  ██</Text>
             <Text>    </Text>
             <Text> ████ </Text>
             <Text>█    █</Text>
             <Text>█    █</Text>
-            <Text>    </Text>
     
         </>
     );
     
     const Face5 = () => (
         <>
-            <Text>    </Text>
+            <Text> </Text>
             <Text>█    █</Text>
             <Text>██  ██</Text>
             <Text>    </Text>
             <Text> ████ </Text>
             <Text>█    █</Text>
-            <Text>    </Text>
         </>
     );
 
@@ -155,22 +150,23 @@ const MoodSelection = ({onLeftArrowRef, onRightArrowRef, onEnterRef, setCurrentS
                             borderColor={selectButtonIndex === 1 ? "green" : "cyan"}
                             backgroundColor={selectButtonIndex === 1 ? "green" : undefined}
                             minWidth={15}
-                            height={17}
+                            height={19}
                             flexDirection="column"
                             alignItems="center"
-                            justifyContent="space-between"
+                            paddingTop={1}
                         >
                             <Face1 />
-                            <BigText text="1"/>
+                            <BigText text="1" />
                         </Box>
                         <Box 
                             borderStyle="round" 
                             borderColor={selectButtonIndex === 2 ? "green" : "cyan"}
                             backgroundColor={selectButtonIndex === 2 ? "green" : undefined}
                             minWidth={15}
-                            height={17}
+                            height={19}
                             flexDirection="column"
                             alignItems="center"
+                            paddingTop={1}
                             >
                             <Face2 />
                             <BigText text="2" />
@@ -181,9 +177,10 @@ const MoodSelection = ({onLeftArrowRef, onRightArrowRef, onEnterRef, setCurrentS
                             borderColor={selectButtonIndex === 3 ? "green" : "cyan"}
                             backgroundColor={selectButtonIndex === 3 ? "green" : undefined}
                             minWidth={15}
-                            height={17}
+                            height={19}
                             flexDirection="column"
                             alignItems="center"
+                            paddingTop={1}
                         >
                             <Face3 />
                             <BigText text="3" />
@@ -193,9 +190,10 @@ const MoodSelection = ({onLeftArrowRef, onRightArrowRef, onEnterRef, setCurrentS
                             borderColor={selectButtonIndex === 4 ? "green" : "cyan"}
                             backgroundColor={selectButtonIndex === 4 ? "green" : undefined}
                             minWidth={15}
-                            height={17}
+                            height={19}
                             flexDirection="column"
                             alignItems="center"
+                            paddingTop={1}
                         >
                             <Face4 />
                             <BigText text="4" />
@@ -205,9 +203,10 @@ const MoodSelection = ({onLeftArrowRef, onRightArrowRef, onEnterRef, setCurrentS
                             borderColor={selectButtonIndex === 5 ? "green" : "cyan"}
                             backgroundColor={selectButtonIndex === 5 ? "green" : undefined}
                             minWidth={15}
-                            height={17}
+                            height={19}
                             flexDirection="column"
                             alignItems="center"
+                            paddingTop={1}
                         >
                             <Face5 />
                             <BigText text="5" />
