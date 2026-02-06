@@ -82,7 +82,6 @@ const MoodSelection = ({onLeftArrowRef, onRightArrowRef, onEnterRef, setCurrentS
             <Text>█    █</Text>
             <Text> ████ </Text>
             <Text>    </Text>
-    
         </>
     );
     const Face2 = () => (
@@ -94,7 +93,6 @@ const MoodSelection = ({onLeftArrowRef, onRightArrowRef, onEnterRef, setCurrentS
             <Text>█    █</Text>
             <Text> ████ </Text>
             <Text>    </Text>
-    
         </>
     );
     
@@ -107,7 +105,6 @@ const MoodSelection = ({onLeftArrowRef, onRightArrowRef, onEnterRef, setCurrentS
             <Text>██████</Text>
             <Text>    </Text>
             <Text>    </Text>
-    
         </>
     );
     
@@ -161,9 +158,10 @@ const MoodSelection = ({onLeftArrowRef, onRightArrowRef, onEnterRef, setCurrentS
                             height={17}
                             flexDirection="column"
                             alignItems="center"
+                            justifyContent="space-between"
                         >
-                            <BigText text="1"/>
                             <Face1 />
+                            <BigText text="1"/>
                         </Box>
                         <Box 
                             borderStyle="round" 
@@ -174,8 +172,8 @@ const MoodSelection = ({onLeftArrowRef, onRightArrowRef, onEnterRef, setCurrentS
                             flexDirection="column"
                             alignItems="center"
                             >
-                            <BigText text="2" />
                             <Face2 />
+                            <BigText text="2" />
 
                         </Box>
                         <Box 
@@ -187,8 +185,8 @@ const MoodSelection = ({onLeftArrowRef, onRightArrowRef, onEnterRef, setCurrentS
                             flexDirection="column"
                             alignItems="center"
                         >
-                            <BigText text="3" />
                             <Face3 />
+                            <BigText text="3" />
                         </Box>
                         <Box 
                             borderStyle="round" 
@@ -199,8 +197,8 @@ const MoodSelection = ({onLeftArrowRef, onRightArrowRef, onEnterRef, setCurrentS
                             flexDirection="column"
                             alignItems="center"
                         >
-                            <BigText text="4" />
                             <Face4 />
+                            <BigText text="4" />
                         </Box>
                         <Box 
                             borderStyle="round" 
@@ -211,8 +209,8 @@ const MoodSelection = ({onLeftArrowRef, onRightArrowRef, onEnterRef, setCurrentS
                             flexDirection="column"
                             alignItems="center"
                         >
-                            <BigText text="5" />
                             <Face5 />
+                            <BigText text="5" />
                         </Box>
                     </Box>
                 </Box>

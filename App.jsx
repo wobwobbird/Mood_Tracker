@@ -288,7 +288,12 @@ const App = () => {
 					>
 					</Box>
 				</Box>
-				<ResultsScreen/>
+				<Box
+					width="100%"
+					height="80%"
+				>
+					<ResultsScreen/>
+				</Box>
 			</Box>
 		)
 	}
