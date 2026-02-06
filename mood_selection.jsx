@@ -135,13 +135,14 @@ const MoodSelection = ({onLeftArrowRef, onRightArrowRef, onEnterRef, setCurrentS
             alignItems='center'
             justifyContent='center'
             flexGrow={1}
+            
         > 
             {moodSelected === false && (
                 <Box 
                     flexDirection="column"
                     alignItems="center"
                     flexGrow={1}
-                    justifyContent='center'
+                    justifyContent="space-evenly"
                 >
                     <BigText text="Record how you are feeling now" font="tiny"/>
                     <Box alignItems='row' gap="10" >
@@ -244,7 +245,8 @@ const MoodSelection = ({onLeftArrowRef, onRightArrowRef, onEnterRef, setCurrentS
                     alignItems="center"
                     width="100%"
                     flexGrow={1}
-                    justifyContent='space-around'
+                    justifyContent='center'
+                    backgroundColor="pink"
                 >
                     <TextInput
                         value={textInput}
