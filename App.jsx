@@ -186,7 +186,7 @@ const App = () => {
 				</Box>
 				<Box flexDirection="column" width="100%" flexGrow={1} alignItems='center' justifyContent='center'>
 					{currentScreen === "menu" && (
-						<>
+						<Box flexDirection='column'   flexGrow={1} justifyContent="center" gap={3} >
 							<Box 
 								borderStyle="round"
 								borderColor={menuSelectedIndex === 2 ? "green" : "cyan"} 
@@ -211,7 +211,7 @@ const App = () => {
 								{/* <Text color="white">  Press [enter] To Start  </Text> */}
 								<BigText text="See Results" font="tiny" />
 							</Box>
-						</>
+						</Box>
 					)}
 					{currentScreen === "mood" && (
 						<MoodSelection
