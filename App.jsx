@@ -248,16 +248,16 @@ const App = () => {
 
 	const AppLogicResults = () => {
 		return (
-			<Box flexDirection="column" width="100%" height="100%" alignItems='center' justifyContent='center' >
+			<Box flexDirection="column" width="100%" height="100%" backgroundColor="red">
 				<Box
 					flexDirection='row'
-					height={25}
-					minHeight={25}
-					maxHeight={25}
+					height={8}
 					flexShrink={0}				
 					width="100%"
-					margin={1}
 					backgroundColor="pinkBright"
+					paddingY={1}
+					paddingX={3}
+					gap={2}
 				>
 					<Box
 						borderColor="green"
@@ -290,7 +290,9 @@ const App = () => {
 				</Box>
 				<Box
 					width="100%"
-					height="80%"
+					backgroundColor="blue"
+					flexGrow={1}
+					paddingX={3}
 				>
 					<ResultsScreen/>
 				</Box>
