@@ -3,11 +3,6 @@ import { Text, Box, useInput } from 'ink';
 import ResultsScreen from '../results_screen';
 
 const ResultsFlowScreen = ({ setCurrentScreen }) => {
-	useInput((input, key) => {
-		if (input === 'b' || key.leftArrow) {
-			setCurrentScreen('menu');
-		}
-	});
 
 	return (
 		<Box flexDirection="column" width="100%" height="100%">

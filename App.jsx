@@ -44,11 +44,11 @@ const App = () => {
 	}, [dimensions.height, dimensions.width]);
 	
 	useInput((input, key) => {
-		if ((input === 'q') || key.escape || (key.ctrl && input === 'c')) {
+		if ((key.ctrl && input === 'q') || key.escape || (key.ctrl && input === 'c')) {
 			process.stdout.write('\x1b[?25h');
 			exit();
 		}
-		if (input === 'b' && currentScreen !== 'results') {
+		if ((key.ctrl && input === 'b') && currentScreen !== 'results') {
 			setShowInnerBorder((prev) => !prev);
 		}
 	});
@@ -147,8 +147,7 @@ const App = () => {
 										{children}
 									</Box>
 								</Box>
-								{/* <Box flexDirection="column" width="100%" height="100%" alignItems='center' justifyContent='center'> */}
-								<Text color="gray" alignSelf="center" >Press 'q' or ESC to quit</Text>	
+								<Text color="gray" alignSelf="center" >Press ctrl + 'q' or ESC to quit</Text>	
 							</Box>
 						</Box>
 					</Box>
