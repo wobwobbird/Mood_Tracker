@@ -7,6 +7,9 @@ import { borderColourSchemes } from './colourScheme';
 import BigText from 'ink-big-text';
 import ResultsScreen from './results_screen';
 
+// cd /Users/guymarshman/Dev/Back_End_Dev/Github/Mood_Tracker
+// npm start mood record
+
 const App = () => {
 	const [dimensions, setDimensions] = useState({
 		width: process.stdout.columns || 80,
@@ -34,6 +37,7 @@ const App = () => {
 	const MIN_WIDTH = 150 + 10;
 	const MIN_HEIGHT = 50 + 13;
 	const [isTerminalTooSmall, setIsTerminalTooSmall] = useState(true);
+	const [showInnerBorder, setShowInnerBorder] = useState(false);
 
 	useEffect(() => {
 		if (dimensions.height >= MIN_HEIGHT && dimensions.width >= MIN_WIDTH) {
@@ -47,6 +51,9 @@ const App = () => {
 		if (input === 'q' || key.escape || (key.ctrl && input === 'c')) {
 			process.stdout.write('\x1b[?25h');
 			exit();
+		}
+		if (input === 'b') {
+			setShowInnerBorder(prev => !prev)
 		}
 		if (key.downArrow || key.rightArrow) {
 			if (currentScreen === "menu") setMenuSelectedIndex((menuSelectedIndex + 1) % SELECTABLE_ELEMENTS.length);
@@ -163,8 +170,8 @@ const App = () => {
 									height="100%"
 								>
 									<Box 
-										borderStyle="classic" 
-										borderColor="red" 
+										borderStyle={showInnerBorder? "classic" : undefined}
+										borderColor={showInnerBorder? "red" : undefined}
 										flexDirection="column" 
 										width={MIN_WIDTH - 10} 
 										height={MIN_HEIGHT - 13} 
