@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Text, Box, useInput, useApp } from 'ink';
 import { getLogoColourIndexFromDb } from './database';
-import { borderColourSchemes } from './colourScheme';
 import RecordFlowScreen from './screens/RecordFlowScreen';
 import ResultsFlowScreen from './screens/ResultsFlowScreen';
+import Border from './components/Border';
 
 // cd /Users/guymarshman/Dev/Back_End_Dev/Github/Mood_Tracker
 // npm start mood record
@@ -41,7 +41,7 @@ const App = () => {
 		} else {
 			setIsTerminalTooSmall(true);
 		}
-	}, [dimensions.height, dimensions.width]);
+	}, [dimensions.height, dimensions.width, MIN_HEIGHT, MIN_WIDTH]);
 	
 	useInput((input, key) => {
 		if ((key.ctrl && input === 'q') || key.escape || (key.ctrl && input === 'c')) {
@@ -75,89 +75,15 @@ const App = () => {
 		};
 	}, []);
 
-	const Border = ({ children }) => {
-		return (
-			isTerminalTooSmall ? (
-				<Box
-					borderStyle="round"
-					borderColor="red"
-					width={dimensions.width}
-					height={dimensions.height}	
-					flexDirection="column"
-					alignItems="center"
-					justifyContent="center"
-					gap="1"
-				>
-					{dimensions.width <= MIN_WIDTH ? (
-						<Text >The width is {dimensions.width}, increase by {MIN_WIDTH - dimensions.width} to begin</Text>
-					) : (
-						<Text >The width is enough</Text>
-					)}
-					{dimensions.height <= MIN_HEIGHT ? (
-						<Text >The height is {dimensions.height}, increase by {MIN_HEIGHT - dimensions.height} to begin</Text>
-					) : (
-						<Text >The height is enough</Text>
-					)}
-					
-				</Box>
-			) : (
-				<Box
-					borderStyle="round"
-					borderColor={borderColourSchemes[logoColourIndex][0]}
-					width={dimensions.width}
-					height={dimensions.height}
-				>
-					<Box 
-						borderStyle="round"
-						borderColor={borderColourSchemes[logoColourIndex][1]}
-						width="100%"
-						height="100%"
-					> 	
-						<Box 
-							borderStyle="round"
-							borderColor={borderColourSchemes[logoColourIndex][2]}
-							width="100%"
-							height="100%"
-						> 	
-							<Box 
-								borderStyle="round"
-								borderColor={borderColourSchemes[logoColourIndex][3]}
-								width="100%"
-								height="100%"
-								alignItems='center'
-								justifyContent='space-between'
-								flexDirection="column"
-							> 	
-								<Box
-									flexDirection="column" 
-									gap={1}
-									alignItems='center' 
-									justifyContent='center'
-									height="100%"
-								>
-									<Box 
-										borderStyle={showInnerBorder? "classic" : undefined}
-										borderColor={showInnerBorder? "red" : undefined}
-										flexDirection="column" 
-										width={MIN_WIDTH - 10} 
-										height={MIN_HEIGHT - 13} 
-										alignItems='center' 
-										justifyContent='center'
-									>
-										{children}
-									</Box>
-								</Box>
-								<Text color="gray" alignSelf="center" >Press ctrl + 'q' or ESC to quit</Text>	
-							</Box>
-						</Box>
-					</Box>
-				</Box>
-			)
-		)
-	}
-
 	return (
-		<Border>
+		<Border
+			dimensions={dimensions}
+			minWidth={MIN_WIDTH}
+			minHeight={MIN_HEIGHT}
+			logoColourIndex={logoColourIndex}
+			isTerminalTooSmall={isTerminalTooSmall}
+			showInnerBorder={showInnerBorder}
+		>
 			{currentScreen !== 'results' ? (
 				<RecordFlowScreen
 					menuSelectedIndex={menuSelectedIndex}
