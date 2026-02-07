@@ -4,9 +4,9 @@ import BigText from 'ink-big-text';
 import MoodSelection from '../components/mood_selection';
 import Logo from '../components/logo';
 import { saveLogoColourIndex } from '../database';
-import { SCREENS } from './constants';
+import { SCREENS } from '../constants.js';
 
-const SELECTABLE_ELEMENTS = ['logo', 'none', 'record', 'results'];
+const MENU_SELECTABLE_ELEMENTS = ['logo', 'none', 'record', 'results'];
 
 const RecordFlowScreen = ({
 	menuSelectedIndex,
@@ -29,14 +29,14 @@ const RecordFlowScreen = ({
 	useInput((input, key) => {
 		if (key.downArrow || key.rightArrow) {
 			if (currentScreen === SCREENS.MENU) {
-				setMenuSelectedIndex((menuSelectedIndex + 1) % SELECTABLE_ELEMENTS.length);
+				setMenuSelectedIndex((menuSelectedIndex + 1) % MENU_SELECTABLE_ELEMENTS.length);
 			}
 			if (currentScreen === SCREENS.MOOD) handleMoodLeftArrow.current();
 			if (currentScreen === SCREENS.ASK_RESULTS) setSeeResultsAnswer((prev) => !prev);
 		}
 		if (key.upArrow || key.leftArrow) {
 			if (currentScreen === SCREENS.MENU) {
-				setMenuSelectedIndex((menuSelectedIndex - 1 + SELECTABLE_ELEMENTS.length) % SELECTABLE_ELEMENTS.length);
+				setMenuSelectedIndex((menuSelectedIndex - 1 + MENU_SELECTABLE_ELEMENTS.length) % MENU_SELECTABLE_ELEMENTS.length);
 			}
 			if (currentScreen === SCREENS.MOOD) handleMoodRightArrow.current();
 			if (currentScreen === SCREENS.ASK_RESULTS) setSeeResultsAnswer((prev) => !prev);

@@ -3,7 +3,7 @@ import {render, Text, Box, useInput, useApp} from 'ink';
 import { saveMoodEntry } from '../database.js';
 import TextInput from "ink-text-input";
 import BigText from 'ink-big-text';
-import { SCREENS } from './constants';
+import { SCREENS } from '../constants.js';
 
 
 const MoodSelection = ({onLeftArrowRef, onRightArrowRef, onEnterRef, setCurrentScreen}) => {
