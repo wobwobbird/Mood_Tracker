@@ -1,11 +1,9 @@
-import React, {useState, useEffect, useRef} from 'react';
-import {render, Text, Box, useInput, useApp} from 'ink';
-import MoodSelection from './mood_selection';
-import Logo from './logo';
+import React, { useState, useEffect, useRef } from 'react';
+import { Text, Box, useInput, useApp } from 'ink';
 import { saveLogoColourIndex, getLogoColourIndexFromDb } from './database';
 import { borderColourSchemes } from './colourScheme';
-import BigText from 'ink-big-text';
-import ResultsScreen from './results_screen';
+import RecordFlowScreen from './screens/RecordFlowScreen';
+import ResultsFlowScreen from './screens/ResultsFlowScreen';
 
 // cd /Users/guymarshman/Dev/Back_End_Dev/Github/Mood_Tracker
 // npm start mood record
@@ -191,181 +189,25 @@ const App = () => {
 		)
 	}
 
-	const AppLogicRecord = () => {
-		return (
-			<Box flexDirection="column" width="100%" height="100%" alignItems='center' justifyContent='center'>
-				<Box borderStyle="double" padding={1} marginTop={2} borderColor={menuSelectedIndex === 0 ? "white" : "black"}>
-					{<Logo onColourChangeRef={handleLogoColourChange} logoColourIndex={logoColourIndex} setLogoColourIndex={setLogoColourIndex} />}
-				</Box>
-				<Box flexDirection="column" width="100%" flexGrow={1} alignItems='center' justifyContent='center'>
-					{currentScreen === "menu" && (
-						<Box flexDirection='column'   flexGrow={1} justifyContent="center" gap={3} >
-							<Box 
-								borderStyle="round"
-								borderColor={menuSelectedIndex === 2 ? "green" : "cyan"} 
-								backgroundColor={menuSelectedIndex === 2 ? "green" : undefined}
-								onMouseEnter={() => setMenuSelectedIndex(2)}
-								onMouseLeave={() => setMenuSelectedIndex(0)}
-								width={50}
-								justifyContent='center'
-							>
-								{/* <Text color="white">  Press [enter] To Start  </Text> */}
-								<BigText text="Record Mood" font="tiny" />
-							</Box>
-							<Box 
-								borderStyle="round" 
-								borderColor={menuSelectedIndex === 3 ? "green" : "cyan"} 
-								backgroundColor={menuSelectedIndex === 3 ? "green" : undefined}
-								onMouseEnter={() => setMenuSelectedIndex(3)}
-								onMouseLeave={() => setMenuSelectedIndex(0)}
-								width={50}
-								justifyContent='center'
-							>
-								{/* <Text color="white">  Press [enter] To Start  </Text> */}
-								<BigText text="See Results" font="tiny" />
-							</Box>
-						</Box>
-					)}
-					{currentScreen === "mood" && (
-						<MoodSelection
-							onLeftArrowRef={handleMoodLeftArrow}
-							onRightArrowRef={handleMoodRightArrow}
-							onEnterRef={handleMoodEnter}
-							setCurrentScreen={setCurrentScreen}
-						/>
-					)}
-					{currentScreen === "askToSeeResults" && showGoodbyeText === false && (
-						<>
-							<BigText text="See Results?" font="tiny"/>
-							<Box alignItems='row' gap="5" paddingx={2} paddingY={2}>
-								<Box
-									borderStyle="round" 
-									backgroundColor={seeResultsAnswer === true ? "green" : undefined}                        
-								>
-									<BigText text="Yes"/>
-								</Box>
-								<Box
-									borderStyle="round" 
-									backgroundColor={seeResultsAnswer === false ? "green" : undefined}     
-								>
-									<BigText text="No"/>
-								</Box>
-							</Box>
-							{/* <Text>YOOOO DANTE</Text> */}
-						</>
-					)}
-					{currentScreen === "askToSeeResults" && showGoodbyeText === true && (
-						<BigText text="Good Bye" lineHeight={3}/>
-					)}
-				</Box>
-			</Box>
-		)
-	}
-
-	const AppLogicResults = () => {
-		return (
-			<Box flexDirection="column" width="100%" height="100%" >
-				<Box
-					flexDirection='row'
-					height={8}
-					flexShrink={0}				
-					width="100%"
-					backgroundColor="pinkBright"
-					paddingY={1}
-					paddingX={3}
-					gap={2}
-				>
-					<Box
-						borderColor="green"
-						borderStyle="double"
-						flexGrow={1}
-						maxHeight={25}
-						alignItems='center'
-						justifyContent='center'
-						>
-						<Text>See All Records</Text>
-					</Box>
-					<Box
-						borderColor="green"
-						borderStyle="double"
-						flexGrow={1}
-						maxHeight={25}
-						alignItems='center'
-						justifyContent='center'
-					>
-						<Text>Show by day</Text>
-					</Box>
-					<Box
-						borderColor="green"
-						borderStyle="double"
-						flexGrow={1}
-						maxHeight={25}
-						alignItems='center'
-						justifyContent='center'
-					>
-						<Text>Graph</Text>
-					</Box>
-				</Box>
-
-
-				<Box
-					flexDirection='row'
-
-					flexShrink={0}				
-					backgroundColor="pinkBright"
-					paddingX={3}
-					marginBottom={1}
-					gap={2}
-					width="50%"
-				>
-					<Box
-						borderColor="green"
-						borderStyle="double"
-						flexGrow={1}
-						alignItems='center'
-						justifyContent='center'
-						>
-						<Text>Next</Text>
-					</Box>
-					<Box
-						borderColor="green"
-						borderStyle="double"
-						flexGrow={1}
-						alignItems='center'
-						justifyContent='center'
-					>
-						<Text>Prev</Text>
-					</Box>
-					<Box
-						borderColor="green"
-						borderStyle="double"
-						flexGrow={1}
-						alignItems='center'
-						justifyContent='center'
-					>
-						<Text>Back</Text>
-					</Box>
-				</Box>
-
-
-				<Box
-					width="100%"
-					backgroundColor="blue"
-					flexGrow={1}
-					paddingX={3}
-				>
-					<ResultsScreen/>
-				</Box>
-			</Box>
-		)
-	}
-
 	return (
 		<Border>
-			{currentScreen !== "results" ? (
-				<AppLogicRecord/>
+			{currentScreen !== 'results' ? (
+				<RecordFlowScreen
+					menuSelectedIndex={menuSelectedIndex}
+					setMenuSelectedIndex={setMenuSelectedIndex}
+					currentScreen={currentScreen}
+					logoColourIndex={logoColourIndex}
+					setLogoColourIndex={setLogoColourIndex}
+					handleLogoColourChange={handleLogoColourChange}
+					handleMoodLeftArrow={handleMoodLeftArrow}
+					handleMoodRightArrow={handleMoodRightArrow}
+					handleMoodEnter={handleMoodEnter}
+					seeResultsAnswer={seeResultsAnswer}
+					showGoodbyeText={showGoodbyeText}
+					setCurrentScreen={setCurrentScreen}
+				/>
 			) : (
-				<AppLogicResults/>
+				<ResultsFlowScreen />
 			)}
 		</Border>
 	);
