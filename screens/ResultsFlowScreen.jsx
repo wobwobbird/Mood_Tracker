@@ -1,6 +1,7 @@
 import React from 'react';
 import { Text, Box, useInput } from 'ink';
-import ResultsScreen from '../results_screen';
+import ResultsScreen from '../components/results_screen';
+import { SCREENS } from './constants';
 
 const ResultsFlowScreen = ({ setCurrentScreen }) => {
 

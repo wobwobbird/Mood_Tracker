@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import {Text, Box} from 'ink';
-import { logoColourSchemes } from './colourScheme';
+import { logoColourSchemes } from '../colourScheme';
 
 const Logo = ({ onColourChangeRef, logoColourIndex, setLogoColourIndex }) => {
 

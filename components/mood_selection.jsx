@@ -1,8 +1,10 @@
 import React, {useState, useEffect} from 'react';
 import {render, Text, Box, useInput, useApp} from 'ink';
-import { saveMoodEntry } from './database.js';
+import { saveMoodEntry } from '../database.js';
 import TextInput from "ink-text-input";
 import BigText from 'ink-big-text';
+import { SCREENS } from './constants';
+
 
 const MoodSelection = ({onLeftArrowRef, onRightArrowRef, onEnterRef, setCurrentScreen}) => {
 
@@ -52,7 +54,7 @@ const MoodSelection = ({onLeftArrowRef, onRightArrowRef, onEnterRef, setCurrentS
                     saveMoodEntry(selectButtonIndex, null);
                     setInputOver(true);
                     // exit();
-                    setCurrentScreen("askToSeeResults");
+                    setCurrentScreen(SCREENS.ASK_RESULTS);
                 }
                 if (writeNote === true) {
                     if (moodInputVisable === false) {
@@ -62,7 +64,7 @@ const MoodSelection = ({onLeftArrowRef, onRightArrowRef, onEnterRef, setCurrentS
                             saveMoodEntry(selectButtonIndex, textInput);
                             setInputOver(true);
                             // exit();
-                            setCurrentScreen("askToSeeResults");
+                            setCurrentScreen(SCREENS.ASK_RESULTS);
                         }
                     }
                 }
@@ -262,47 +264,3 @@ const MoodSelection = ({onLeftArrowRef, onRightArrowRef, onEnterRef, setCurrentS
 
 export default MoodSelection;
 
-            {/* {moodSelected === false && (
-                <>
-                    <Text width="50"> Record how you are feeling now</Text>
-                    <Text> </Text>
-                    <Box alignItems='row' gap="10">
-                        <Box 
-                            borderStyle="round" 
-                            borderColor={selectButtonIndex === 1 ? "green" : "cyan"}
-                            backgroundColor={selectButtonIndex === 1 ? "green" : undefined}
-                        >
-                            <Text width="50"> 1 🤩 </Text>
-                        </Box>
-
-                        <Box 
-                            borderStyle="round" 
-                            borderColor={selectButtonIndex === 2 ? "green" : "cyan"}
-                            backgroundColor={selectButtonIndex === 2 ? "green" : undefined}
-                        >
-                            <Text width="50"> 2 😀 </Text>
-                        </Box>
-                        <Box 
-                            borderStyle="round" 
-                            borderColor={selectButtonIndex === 3 ? "green" : "cyan"}
-                            backgroundColor={selectButtonIndex === 3 ? "green" : undefined}
-                        >
-                            <Text width="50"> 3 😐 </Text>
-                        </Box>
-                        <Box 
-                            borderStyle="round" 
-                            borderColor={selectButtonIndex === 4 ? "green" : "cyan"}
-                            backgroundColor={selectButtonIndex === 4 ? "green" : undefined}
-                        >
-                            <Text width="50"> 4 🙁 </Text>
-                        </Box>
-                        <Box 
-                            borderStyle="round" 
-                            borderColor={selectButtonIndex === 5 ? "green" : "cyan"}
-                            backgroundColor={selectButtonIndex === 5 ? "green" : undefined}
-                        >
-                            <Text width="50"> 5 😡 </Text>
-                        </Box>
-                    </Box>
-                </>
-            )} */}

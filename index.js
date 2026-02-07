@@ -9,7 +9,7 @@ if (process.argv[2] === 'mood') {
 		setupTerminal();
 		setupErrorHandlers();
 
-		import('./results_screen.jsx').then(({ default: ResultsScreen }) => {
+		import('./components/results_screen.jsx').then(({ default: ResultsScreen }) => {
 			const instance = render(React.createElement(ResultsScreen));
 			const cleanup = createAppCleanup(instance);
 			process.on('SIGINT', cleanup);

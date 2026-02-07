@@ -4,9 +4,11 @@ import { getLogoColourIndexFromDb } from './database';
 import RecordFlowScreen from './screens/RecordFlowScreen';
 import ResultsFlowScreen from './screens/ResultsFlowScreen';
 import Border from './components/Border';
+import { SCREENS } from './constants';
 
 // cd /Users/guymarshman/Dev/Back_End_Dev/Github/Mood_Tracker
 // npm start mood record
+
 
 const App = () => {
 	const [dimensions, setDimensions] = useState({
@@ -16,7 +18,7 @@ const App = () => {
 	
 	const [menuSelectedIndex, setMenuSelectedIndex] = useState(1);
 
-	const [currentScreen, setCurrentScreen] = useState("menu");
+	const [currentScreen, setCurrentScreen] = useState(SCREENS.MENU);
 	
 	const [logoColourIndex, setLogoColourIndex] = useState(getLogoColourIndexFromDb());
 

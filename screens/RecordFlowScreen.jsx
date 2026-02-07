@@ -1,9 +1,10 @@
 import React from 'react';
 import { Box, useInput, useApp } from 'ink';
 import BigText from 'ink-big-text';
-import MoodSelection from '../mood_selection';
-import Logo from '../logo';
+import MoodSelection from '../components/mood_selection';
+import Logo from '../components/logo';
 import { saveLogoColourIndex } from '../database';
+import { SCREENS } from './constants';
 
 const SELECTABLE_ELEMENTS = ['logo', 'none', 'record', 'results'];
 
@@ -27,31 +28,31 @@ const RecordFlowScreen = ({
 
 	useInput((input, key) => {
 		if (key.downArrow || key.rightArrow) {
-			if (currentScreen === 'menu') {
+			if (currentScreen === SCREENS.MENU) {
 				setMenuSelectedIndex((menuSelectedIndex + 1) % SELECTABLE_ELEMENTS.length);
 			}
-			if (currentScreen === 'mood') handleMoodLeftArrow.current();
-			if (currentScreen === 'askToSeeResults') setSeeResultsAnswer((prev) => !prev);
+			if (currentScreen === SCREENS.MOOD) handleMoodLeftArrow.current();
+			if (currentScreen === SCREENS.ASK_RESULTS) setSeeResultsAnswer((prev) => !prev);
 		}
 		if (key.upArrow || key.leftArrow) {
-			if (currentScreen === 'menu') {
+			if (currentScreen === SCREENS.MENU) {
 				setMenuSelectedIndex((menuSelectedIndex - 1 + SELECTABLE_ELEMENTS.length) % SELECTABLE_ELEMENTS.length);
 			}
-			if (currentScreen === 'mood') handleMoodRightArrow.current();
-			if (currentScreen === 'askToSeeResults') setSeeResultsAnswer((prev) => !prev);
+			if (currentScreen === SCREENS.MOOD) handleMoodRightArrow.current();
+			if (currentScreen === SCREENS.ASK_RESULTS) setSeeResultsAnswer((prev) => !prev);
 		}
 		if (key.return) {
-			if (currentScreen === 'menu') {
+			if (currentScreen === SCREENS.MENU) {
 				if (menuSelectedIndex === 0) handleLogoColourChange.current();
 				if (menuSelectedIndex === 2) {
 					saveLogoColourIndex(logoColourIndex);
-					setCurrentScreen('mood');
+					setCurrentScreen(SCREENS.MOOD);
 				}
-				if (menuSelectedIndex === 3) setCurrentScreen('results');
+				if (menuSelectedIndex === 3) setCurrentScreen(SCREENS.RESULTS);
 			}
-			if (currentScreen === 'mood') handleMoodEnter.current();
-			if (currentScreen === 'askToSeeResults') {
-				if (seeResultsAnswer === true) setCurrentScreen('results');
+			if (currentScreen === SCREENS.MOOD) handleMoodEnter.current();
+			if (currentScreen === SCREENS.ASK_RESULTS) {
+				if (seeResultsAnswer === true) setCurrentScreen(SCREENS.RESULTS);
 				if (seeResultsAnswer === false && showGoodbyeText === false) {
 					setShowGoodbyeText(true);
 				}
@@ -72,7 +73,7 @@ const RecordFlowScreen = ({
 				/>
 			</Box>
 			<Box flexDirection="column" width="100%" flexGrow={1} alignItems="center" justifyContent="center">
-				{currentScreen === 'menu' && (
+				{currentScreen === SCREENS.MENU && (
 					<Box flexDirection="column" flexGrow={1} justifyContent="center" gap={3}>
 						<Box
 							borderStyle="round"
@@ -98,7 +99,7 @@ const RecordFlowScreen = ({
 						</Box>
 					</Box>
 				)}
-				{currentScreen === 'mood' && (
+				{currentScreen === SCREENS.MOOD && (
 					<MoodSelection
 						onLeftArrowRef={handleMoodLeftArrow}
 						onRightArrowRef={handleMoodRightArrow}
@@ -106,7 +107,7 @@ const RecordFlowScreen = ({
 						setCurrentScreen={setCurrentScreen}
 					/>
 				)}
-				{currentScreen === 'askToSeeResults' && showGoodbyeText === false && (
+				{currentScreen === SCREENS.ASK_RESULTS && showGoodbyeText === false && (
 					<>
 						<BigText text="See Results?" font="tiny" />
 						<Box alignItems="row" gap="5" paddingX={2} paddingY={2}>
@@ -125,7 +126,7 @@ const RecordFlowScreen = ({
 						</Box>
 					</>
 				)}
-				{currentScreen === 'askToSeeResults' && showGoodbyeText === true && (
+				{currentScreen === SCREENS.ASK_RESULTS && showGoodbyeText === true && (
 					<BigText text="Good Bye" lineHeight={3} />
 				)}
 			</Box>
