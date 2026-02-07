@@ -1,8 +1,11 @@
 import React from 'react';
-import { Box } from 'ink';
+import { Box, useInput, useApp } from 'ink';
 import BigText from 'ink-big-text';
 import MoodSelection from '../mood_selection';
 import Logo from '../logo';
+import { saveLogoColourIndex } from '../database';
+
+const SELECTABLE_ELEMENTS = ['logo', 'none', 'record', 'results'];
 
 const RecordFlowScreen = ({
 	menuSelectedIndex,
@@ -15,9 +18,50 @@ const RecordFlowScreen = ({
 	handleMoodRightArrow,
 	handleMoodEnter,
 	seeResultsAnswer,
+	setSeeResultsAnswer,
 	showGoodbyeText,
+	setShowGoodbyeText,
 	setCurrentScreen,
 }) => {
+	const { exit } = useApp();
+
+	useInput((input, key) => {
+		if (key.downArrow || key.rightArrow) {
+			if (currentScreen === 'menu') {
+				setMenuSelectedIndex((menuSelectedIndex + 1) % SELECTABLE_ELEMENTS.length);
+			}
+			if (currentScreen === 'mood') handleMoodLeftArrow.current();
+			if (currentScreen === 'askToSeeResults') setSeeResultsAnswer((prev) => !prev);
+		}
+		if (key.upArrow || key.leftArrow) {
+			if (currentScreen === 'menu') {
+				setMenuSelectedIndex((menuSelectedIndex - 1 + SELECTABLE_ELEMENTS.length) % SELECTABLE_ELEMENTS.length);
+			}
+			if (currentScreen === 'mood') handleMoodRightArrow.current();
+			if (currentScreen === 'askToSeeResults') setSeeResultsAnswer((prev) => !prev);
+		}
+		if (key.return) {
+			if (currentScreen === 'menu') {
+				if (menuSelectedIndex === 0) handleLogoColourChange.current();
+				if (menuSelectedIndex === 2) {
+					saveLogoColourIndex(logoColourIndex);
+					setCurrentScreen('mood');
+				}
+				if (menuSelectedIndex === 3) setCurrentScreen('results');
+			}
+			if (currentScreen === 'mood') handleMoodEnter.current();
+			if (currentScreen === 'askToSeeResults') {
+				if (seeResultsAnswer === true) setCurrentScreen('results');
+				if (seeResultsAnswer === false && showGoodbyeText === false) {
+					setShowGoodbyeText(true);
+				}
+				if (seeResultsAnswer === false && showGoodbyeText === true) {
+					exit();
+				}
+			}
+		}
+	});
+
 	return (
 		<Box flexDirection="column" width="100%" height="100%" alignItems="center" justifyContent="center">
 			<Box borderStyle="double" padding={1} marginTop={2} borderColor={menuSelectedIndex === 0 ? 'white' : 'black'}>

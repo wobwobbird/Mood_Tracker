@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Text, Box, useInput, useApp } from 'ink';
-import { saveLogoColourIndex, getLogoColourIndexFromDb } from './database';
+import { getLogoColourIndexFromDb } from './database';
 import { borderColourSchemes } from './colourScheme';
 import RecordFlowScreen from './screens/RecordFlowScreen';
 import ResultsFlowScreen from './screens/ResultsFlowScreen';
@@ -25,9 +25,7 @@ const App = () => {
 	const handleMoodRightArrow = useRef(() => {});
 	const handleMoodEnter = useRef(() => {});
 
-	const SELECTABLE_ELEMENTS = ["logo", "none", "record", "results"];
-
-	const {exit} = useApp();
+	const { exit } = useApp();
 
 	const [seeResultsAnswer, setSeeResultsAnswer] = useState(true);
 	const [showGoodbyeText, setShowGoodbyeText] = useState(false);
@@ -46,42 +44,12 @@ const App = () => {
 	}, [dimensions.height, dimensions.width]);
 	
 	useInput((input, key) => {
-		if (input === 'q' || key.escape || (key.ctrl && input === 'c')) {
+		if ((input === 'q') || key.escape || (key.ctrl && input === 'c')) {
 			process.stdout.write('\x1b[?25h');
 			exit();
 		}
-		if (input === 'b') {
-			setShowInnerBorder(prev => !prev)
-		}
-		if (key.downArrow || key.rightArrow) {
-			if (currentScreen === "menu") setMenuSelectedIndex((menuSelectedIndex + 1) % SELECTABLE_ELEMENTS.length);
-			if (currentScreen === "mood") handleMoodLeftArrow.current();
-			if (currentScreen === "askToSeeResults") setSeeResultsAnswer(!seeResultsAnswer);
-		}
-		if (key.upArrow || key.leftArrow) {
-			if (currentScreen === "menu") setMenuSelectedIndex((menuSelectedIndex - 1 + SELECTABLE_ELEMENTS.length) % SELECTABLE_ELEMENTS.length);
-			if (currentScreen === "mood") handleMoodRightArrow.current();
-			if (currentScreen === "askToSeeResults") setSeeResultsAnswer(!seeResultsAnswer);
-		}
-		if (key.return) {
-			if (currentScreen === "menu") {
-				if (menuSelectedIndex === 0) handleLogoColourChange.current();
-				if (menuSelectedIndex === 2) {
-					saveLogoColourIndex(logoColourIndex);
-					setCurrentScreen("mood");
-				}
-				if (menuSelectedIndex === 3) setCurrentScreen("results")
-			}
-			if (currentScreen === "mood") handleMoodEnter.current();
-			if (currentScreen === "askToSeeResults") {
-				if (seeResultsAnswer === true) setCurrentScreen("results");
-				if (seeResultsAnswer === false && showGoodbyeText === false) { 
-					setShowGoodbyeText(true);
-				}
-				if (seeResultsAnswer === false && showGoodbyeText === true) { 
-					exit();
-				}
-			}
+		if (input === 'b' && currentScreen !== 'results') {
+			setShowInnerBorder((prev) => !prev);
 		}
 	});
 
@@ -203,11 +171,13 @@ const App = () => {
 					handleMoodRightArrow={handleMoodRightArrow}
 					handleMoodEnter={handleMoodEnter}
 					seeResultsAnswer={seeResultsAnswer}
+					setSeeResultsAnswer={setSeeResultsAnswer}
 					showGoodbyeText={showGoodbyeText}
+					setShowGoodbyeText={setShowGoodbyeText}
 					setCurrentScreen={setCurrentScreen}
 				/>
 			) : (
-				<ResultsFlowScreen />
+				<ResultsFlowScreen setCurrentScreen={setCurrentScreen} />
 			)}
 		</Border>
 	);
