@@ -18,7 +18,7 @@ const ResultsFlowScreen = ({ setCurrentScreen }) => {
 	const [currentPage, setCurrentPage] = useState(0);
 
 
-	const viewMode = ['byDay', 'trends', 'graph'];
+	const viewMode = ["All Records", "By Day"];
 
 	const PAGE_SIZE = 30; //35
 
@@ -36,21 +36,19 @@ const ResultsFlowScreen = ({ setCurrentScreen }) => {
 				setFocusedSection('bottom');
 			}
 		} else {
-			// focusedSection === 'bottom'
 			if (key.downArrow || key.upArrow || key.leftArrow || key.rightArrow) {
 				const direction = (key.downArrow || key.rightArrow) ? 1 : -1;
 				setFocusedNavIndex(prev => (prev + direction + NAV_OPTIONS) % NAV_OPTIONS);
 			}
 			if (key.return && focusedNavIndex === 1) {
-				setCurrentPage(prev => Math.min(prev + 1, Math.ceil(databaseData.length / PAGE_SIZE) - 1));
-			}
-			if (key.return && focusedNavIndex === 2) {
-				setCurrentPage(prev => Math.max(prev - 1, 0));
-			}
-			if (key.return && focusedNavIndex === 3) {
-				// Back pressed - return to top section
 				setFocusedSection('top');
 				setActiveViewIndex(-1);
+			}
+			if (key.return && focusedNavIndex === 2) {
+				setCurrentPage(prev => Math.min(prev + 1, Math.ceil(databaseData.length / PAGE_SIZE) - 1));
+			}
+			if (key.return && focusedNavIndex === 3) {
+				setCurrentPage(prev => Math.max(prev - 1, 0));
 			}
 		}
 	});
@@ -115,53 +113,62 @@ const ResultsFlowScreen = ({ setCurrentScreen }) => {
 				{focusedSection === 'bottom' && focusedViewIndex === 0 && (
 						<Box
 							flexDirection="row"
-							width={80}
-							gap={2}
+							width="100%"
+							justifyContent="space-between"
 
 						>
-							<Box borderColor="green" borderStyle="single" flexGrow={1} alignItems="center" justifyContent="center">
-								<Text>Page {currentPage + 1} of {Math.ceil(databaseData.length / PAGE_SIZE)}</Text>
+							<Box flexDirection="row" width="auto" gap={2}>
+								<Box
+									borderColor="green"
+									borderStyle="double"
+									backgroundColor={focusedSection === 'bottom' && focusedNavIndex === 0 ? 'green' : undefined}
+									flexGrow={1}
+									alignItems="center"
+									justifyContent="center"
+									paddingX={4}
+								>
+									<Text>View: {viewMode[activeViewIndex]}</Text>
+								</Box>
+								<Box
+									borderColor="green"
+									borderStyle="double"
+									backgroundColor={focusedSection === 'bottom' && focusedNavIndex === 1 ? 'green' : undefined}
+									flexGrow={1}
+									alignItems="center"
+									justifyContent="center"
+									paddingX={4}
+								>
+									<Text>Back</Text>
+								</Box>
 							</Box>
-							<Box
-								borderColor="green"
-								borderStyle="single"
-								backgroundColor={focusedSection === 'bottom' && focusedNavIndex === 0 ? 'green' : undefined}
-								flexGrow={1}
-								alignItems="center"
-								justifyContent="center"
-							>
-								<Text>View: {viewMode[activeViewIndex]}</Text>
-							</Box>
-							<Box
-								borderColor="green"
-								borderStyle="double"
-								backgroundColor={focusedSection === 'bottom' && focusedNavIndex === 1 ? 'green' : undefined}
-								flexGrow={1}
-								alignItems="center"
-								justifyContent="center"
-							>
-								<Text>Next</Text>
-							</Box>
-							<Box
-								borderColor="green"
-								borderStyle="double"
-								backgroundColor={focusedSection === 'bottom' && focusedNavIndex === 2 ? 'green' : undefined}
-								flexGrow={1}
-								alignItems="center"
-								justifyContent="center"
-							>
-								<Text>Prev</Text>
-							</Box>
-							<Box
-								borderColor="green"
-								borderStyle="double"
-								backgroundColor={focusedSection === 'bottom' && focusedNavIndex === 3 ? 'green' : undefined}
-								flexGrow={1}
-								alignItems="center"
-								justifyContent="center"
-							>
-								<Text>Back</Text>
-							</Box>
+
+							<Box flexDirection="row" width="auto" gap={2}>
+								<Box
+									borderColor="green"
+									borderStyle="double"
+									backgroundColor={focusedSection === 'bottom' && focusedNavIndex === 2 ? 'green' : undefined}
+									flexGrow={1}
+									alignItems="center"
+									justifyContent="center"
+									paddingX={4}
+								>
+									<Text>Next</Text>
+								</Box>
+								<Box
+									borderColor="green"
+									borderStyle="double"
+									backgroundColor={focusedSection === 'bottom' && focusedNavIndex === 3 ? 'green' : undefined}
+									flexGrow={1}
+									alignItems="center"
+									justifyContent="center"
+									paddingX={4}
+								>
+									<Text>Prev</Text>
+								</Box>
+								<Box borderColor="green" borderStyle="single" flexGrow={1} alignItems="center" justifyContent="center" paddingX={4}>
+									<Text>Page {currentPage + 1} of {Math.ceil(databaseData.length / PAGE_SIZE)}</Text>
+								</Box>
+							</Box>		
 						</Box>
 						
 					)
