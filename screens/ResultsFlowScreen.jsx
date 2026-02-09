@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { Text, Box, useInput } from 'ink';
 import ResultsScreen from '../components/results_screen';
 import { SCREENS } from '../constants.js';
@@ -51,11 +51,19 @@ const ResultsFlowScreen = ({ setCurrentScreen }) => {
 		}
 	});
 
+	
+	const databaseData = useMemo(() => {
+		const data = getMoodEntriesFromDb();
+		return data;
+	}, []);
+
+	const pageEntries = databaseData.slice(currentPage * PAGE_SIZE, (currentPage + 1) * PAGE_SIZE);
+	
 	// setMenuSelectedIndex((menuSelectedIndex - 1 + MENU_SELECTABLE_ELEMENTS.length) % MENU_SELECTABLE_ELEMENTS.length);
 	// setMenuSelectedIndex((menuSelectedIndex + 1) % MENU_SELECTABLE_ELEMENTS.length);
 
 	return (
-		<Box flexDirection="column" width="100%" height="100%">
+		<Box flexDirection="column" width="100%" height="100%" justifyContent="flex-start" >
 			<Box 
 				flexDirection="column"
 				justifyContent="flex-start"
@@ -138,8 +146,8 @@ const ResultsFlowScreen = ({ setCurrentScreen }) => {
 
 			</Box>
 
-			<Box width="100%" backgroundColor="blue" flexGrow={1} paddingX={3}>
-				<ResultsScreen />
+			<Box width="100%" backgroundColor="blue" flexGrow={1} paddingX={3} >
+				<ResultsScreen pageEntries={pageEntries} />
 			</Box>
 		</Box>
 	);

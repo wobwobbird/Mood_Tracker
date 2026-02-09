@@ -2,15 +2,30 @@ import React from 'react';
 import { Text, Box } from 'ink';
 import { getMoodEntriesFromDb } from '../database.js';
 
-const ResultsScreen = () => {
-    const rawData = getMoodEntriesFromDb();
+const ResultsScreen = ({ pageEntries }) => {
+    // const rawData = getMoodEntriesFromDb();
     
-    if (!rawData || rawData.length === 0) {
+    // if (!rawData || rawData.length === 0) {
+    //     return <Text>No mood entries found.</Text>;
+    // }
+    
+    // // Format the data for display
+    // const data = rawData.map(entry => {
+    //     const { date, time } = formatTimestamp(entry.timestamp);
+    //     return {
+    //         mood: `${entry.mood_value} ${getMoodEmoji(entry.mood_value)}`,
+    //         date,
+    //         time,
+    //         notes: entry.notes || '-'
+    //     };
+    // });
+    
+    if (!pageEntries || pageEntries.length === 0) {
         return <Text>No mood entries found.</Text>;
     }
     
     // Format the data for display
-    const data = rawData.map(entry => {
+    const data = pageEntries.map(entry => {
         const { date, time } = formatTimestamp(entry.timestamp);
         return {
             mood: `${entry.mood_value} ${getMoodEmoji(entry.mood_value)}`,
@@ -19,6 +34,8 @@ const ResultsScreen = () => {
             notes: entry.notes || '-'
         };
     });
+
+
     
     return (
         <Box flexDirection="column" padding={1} flexGrow={1}>
