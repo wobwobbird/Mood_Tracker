@@ -2,8 +2,29 @@ import React from 'react';
 import { Text, Box, useInput } from 'ink';
 import ResultsScreen from '../components/results_screen';
 import { SCREENS } from '../constants.js';
+import { getMoodEntriesFromDb } from '../database.js';
 
 const ResultsFlowScreen = ({ setCurrentScreen }) => {
+
+	const [currentPage, setCurrentPage] = useState(0);
+
+	const {navSelected, setNavSelected} = useState(0);
+	const navSelectedIndex = [0, 1, 2];
+
+	viewMode = ['byDay', 'trends', 'graph'];
+
+	const PAGE_SIZE = 10;
+
+	const handleNextPage = () => {
+		setNavSelected(prev => (prev + 1) % navSelectedIndex.length);
+	};
+
+	const handlePrevPage = () => {
+		setNavSelected(prev => (prev - 1 + navSelectedIndex.length) % navSelectedIndex.length);
+	};
+
+	// setMenuSelectedIndex((menuSelectedIndex - 1 + MENU_SELECTABLE_ELEMENTS.length) % MENU_SELECTABLE_ELEMENTS.length);
+	// setMenuSelectedIndex((menuSelectedIndex + 1) % MENU_SELECTABLE_ELEMENTS.length);
 
 	return (
 		<Box flexDirection="column" width="100%" height="100%">
