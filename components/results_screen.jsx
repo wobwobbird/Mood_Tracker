@@ -28,6 +28,7 @@ const ResultsScreen = ({ pageEntries }) => {
     const data = pageEntries.map(entry => {
         const { date, time } = formatTimestamp(entry.timestamp);
         return {
+            id: entry.id,
             mood: `${entry.mood_value} ${getMoodEmoji(entry.mood_value)}`,
             date,
             time,
@@ -42,6 +43,9 @@ const ResultsScreen = ({ pageEntries }) => {
             <Text color="green" bold>Mood History</Text>
             <Text>{"─".repeat(140)}</Text>
             <Box flexDirection="row" marginBottom={1}>
+                <Box width={6}>
+                    <Text color="green" bold>ID</Text>
+                </Box>
                 <Box width={15}>
                     <Text color="green" bold>Mood</Text>
                 </Box>
@@ -57,7 +61,10 @@ const ResultsScreen = ({ pageEntries }) => {
             </Box>
             <Text>{"─".repeat(140)}</Text>
             {data.map((entry, index) => (
-                <Box key={index} flexDirection="row" marginBottom={0}>
+                <Box key={entry.id ?? index} flexDirection="row" marginBottom={0}>
+                    <Box width={6}>
+                        <Text>{entry.id ?? '-'}</Text>
+                    </Box>
                     <Box width={15}>
                         <Text>{entry.mood}</Text>
                     </Box>

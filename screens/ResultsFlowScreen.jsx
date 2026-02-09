@@ -20,15 +20,14 @@ const ResultsFlowScreen = ({ setCurrentScreen }) => {
 
 	const viewMode = ['byDay', 'trends', 'graph'];
 
-	const PAGE_SIZE = 35;
+	const PAGE_SIZE = 30; //35
 
 	const VIEW_OPTIONS = 2; // Records, Graph
-	const NAV_OPTIONS = 3; // Next, Prev, Back
+	const NAV_OPTIONS = 4; // View, Next, Prev, Back
 
 	useInput((input, key) => {
 		if (focusedSection === 'top') {
 			if (key.downArrow || key.upArrow || key.leftArrow || key.rightArrow) {
-				// down/right = forward (+1), up/left = backward (-1)
 				const direction = (key.downArrow || key.rightArrow) ? 1 : -1;
 				setFocusedViewIndex(prev => (prev + direction + VIEW_OPTIONS) % VIEW_OPTIONS);
 			}
@@ -39,11 +38,16 @@ const ResultsFlowScreen = ({ setCurrentScreen }) => {
 		} else {
 			// focusedSection === 'bottom'
 			if (key.downArrow || key.upArrow || key.leftArrow || key.rightArrow) {
-				// down/right = forward (+1), up/left = backward (-1)
 				const direction = (key.downArrow || key.rightArrow) ? 1 : -1;
 				setFocusedNavIndex(prev => (prev + direction + NAV_OPTIONS) % NAV_OPTIONS);
 			}
+			if (key.return && focusedNavIndex === 1) {
+				setCurrentPage(prev => Math.min(prev + 1, Math.ceil(databaseData.length / PAGE_SIZE) - 1));
+			}
 			if (key.return && focusedNavIndex === 2) {
+				setCurrentPage(prev => Math.max(prev - 1, 0));
+			}
+			if (key.return && focusedNavIndex === 3) {
 				// Back pressed - return to top section
 				setFocusedSection('top');
 				setActiveViewIndex(-1);
@@ -115,15 +119,18 @@ const ResultsFlowScreen = ({ setCurrentScreen }) => {
 							gap={2}
 
 						>
+							<Box borderColor="green" borderStyle="single" flexGrow={1} alignItems="center" justifyContent="center">
+								<Text>Page {currentPage + 1} of {Math.ceil(databaseData.length / PAGE_SIZE)}</Text>
+							</Box>
 							<Box
 								borderColor="green"
-								borderStyle="double"
+								borderStyle="single"
 								backgroundColor={focusedSection === 'bottom' && focusedNavIndex === 0 ? 'green' : undefined}
 								flexGrow={1}
 								alignItems="center"
 								justifyContent="center"
 							>
-								<Text>Next</Text>
+								<Text>View: {viewMode[activeViewIndex]}</Text>
 							</Box>
 							<Box
 								borderColor="green"
@@ -133,12 +140,22 @@ const ResultsFlowScreen = ({ setCurrentScreen }) => {
 								alignItems="center"
 								justifyContent="center"
 							>
-								<Text>Prev</Text>
+								<Text>Next</Text>
 							</Box>
 							<Box
 								borderColor="green"
 								borderStyle="double"
 								backgroundColor={focusedSection === 'bottom' && focusedNavIndex === 2 ? 'green' : undefined}
+								flexGrow={1}
+								alignItems="center"
+								justifyContent="center"
+							>
+								<Text>Prev</Text>
+							</Box>
+							<Box
+								borderColor="green"
+								borderStyle="double"
+								backgroundColor={focusedSection === 'bottom' && focusedNavIndex === 3 ? 'green' : undefined}
 								flexGrow={1}
 								alignItems="center"
 								justifyContent="center"
@@ -158,6 +175,7 @@ const ResultsFlowScreen = ({ setCurrentScreen }) => {
 				minHeight={20}
 			>
 				{focusedSection === 'bottom' && focusedViewIndex === 0 && (
+					
 					<ResultsScreen pageEntries={pageEntries} />
 				)}
 			</Box>
