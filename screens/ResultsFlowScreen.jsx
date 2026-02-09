@@ -20,7 +20,7 @@ const ResultsFlowScreen = ({ setCurrentScreen }) => {
 
 	const viewMode = ['byDay', 'trends', 'graph'];
 
-	const PAGE_SIZE = 10;
+	const PAGE_SIZE = 35;
 
 	const VIEW_OPTIONS = 2; // Records, Graph
 	const NAV_OPTIONS = 3; // Next, Prev, Back
@@ -63,15 +63,21 @@ const ResultsFlowScreen = ({ setCurrentScreen }) => {
 	// setMenuSelectedIndex((menuSelectedIndex + 1) % MENU_SELECTABLE_ELEMENTS.length);
 
 	return (
-		<Box flexDirection="column" width="100%" height="100%" justifyContent="flex-start" >
+		<Box
+			flexDirection="column"
+			width="100%"
+			height="100%"
+			justifyContent="flex-start"
+			alignItems="flex-start"
+			marginX={3}
+			marginY={1}
+		>
 			<Box 
 				flexDirection="column"
-				justifyContent="flex-start"
+				flexGrow={0}
 				alignItems="flex-start"
 				width="100%"
-				height={25}
-				marginX={3}
-				marginY={1}
+				height={6}
 				gap={0}
 			>
 				<Box
@@ -146,8 +152,14 @@ const ResultsFlowScreen = ({ setCurrentScreen }) => {
 
 			</Box>
 
-			<Box width="100%" backgroundColor="blue" flexGrow={1} paddingX={3} >
-				<ResultsScreen pageEntries={pageEntries} />
+			<Box
+				width="100%"
+				flexGrow={1}
+				minHeight={20}
+			>
+				{focusedSection === 'bottom' && focusedViewIndex === 0 && (
+					<ResultsScreen pageEntries={pageEntries} />
+				)}
 			</Box>
 		</Box>
 	);
