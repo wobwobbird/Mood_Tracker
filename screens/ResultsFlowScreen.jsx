@@ -152,7 +152,7 @@ const ResultsFlowScreen = ({ setCurrentScreen }) => {
 									justifyContent="center"
 									paddingX={4}
 								>
-									<Text>Next</Text>
+									<Text>Next {'=>'}</Text>
 								</Box>
 								<Box
 									borderColor="green"
@@ -163,7 +163,7 @@ const ResultsFlowScreen = ({ setCurrentScreen }) => {
 									justifyContent="center"
 									paddingX={4}
 								>
-									<Text>Prev</Text>
+									<Text>Prev {'<='}</Text>
 								</Box>
 								<Box borderColor="green" borderStyle="single" flexGrow={1} alignItems="center" justifyContent="center" paddingX={4}>
 									<Text>Page {currentPage + 1} of {Math.ceil(databaseData.length / PAGE_SIZE)}</Text>
