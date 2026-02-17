@@ -1,6 +1,6 @@
 # Mood Tracker
 
-A **terminal-based mood tracker** built with Node.js. It’s a full-screen TUI (Terminal User Interface) that lets you log how you’re feeling and review your history—all from the command line.
+A **terminal-based mood tracker** built with Node.js. It’s a full-screen TUI (Terminal User Interface) that lets you log how you’re feeling and review your history, all from the command line.
 
 I built this as a **learning project** to practice building a CLI in Node and to explore making something that felt visual and “app-like” in the terminal, with a TUI that takes over the full screen. A mood tracker was a small, well-scoped idea that still gave room to try layout, keyboard navigation, and persistence.
 
